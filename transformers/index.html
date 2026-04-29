@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Day 05: RNN, LSTM, Seq2Seq, attention, Transformers — reader-friendly notes (same content as full Transformers page).">
+  <title>Transformers (reader) · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <style>
+    .gn-diagram {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .gn-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gn-node {
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 600;
+      border: 1px solid transparent;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .gn-node:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      border-color: #6366f1;
+    }
+
+    .q { background: #dbeafe; }
+    .k { background: #dcfce7; }
+    .v { background: #fee2e2; }
+    .attn { background: #ede9fe; }
+    .o { background: #fef9c3; }
+
+    .gn-arrow {
+      font-size: 18px;
+      font-weight: bold;
+      color: #6b7280;
+    }
+
+    #infoBox {
+      box-sizing: border-box;
+      position: sticky;
+      top: 3.75rem;
+      z-index: 90;
+      margin: 0 0 1.25rem;
+      padding: 15px;
+      border: 1px solid var(--border, #e2e8f0);
+      border-left: 5px solid #6366f1;
+      border-radius: 8px;
+      background: var(--bg-elevated, #f3f4f6);
+      color: var(--text, #111);
+      font-size: 16px;
+      line-height: 1.5;
+      overflow: visible;
+    }
+
+    #infoBox[hidden] {
+      display: none !important;
+    }
+
+    [data-theme="dark"] #infoBox {
+      border-left-color: #818cf8;
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    .gn-prose-notes h3 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--text);
+      text-align: left;
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .gn-prose-notes .gn-compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 1rem 0;
+    }
+
+    .gn-prose-notes .gn-compare-table th,
+    .gn-prose-notes .gn-compare-table td {
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .gn-prose-notes .gn-compare-table thead th {
+      font-weight: 700;
+      background: color-mix(in srgb, var(--accent) 8%, var(--bg-elevated));
+    }
+
+    .gn-prose-notes .gn-diagram h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .gn-prose-notes .transformer-hero-img {
+      /* 50% of source width (1001×1521 PNG → max ~501px) */
+      width: min(501px, 100%);
+      height: auto;
+      margin: 1.25rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .gn-prose-notes .transformer-hero-img {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+        <div class="gn-header__actions">
+          <nav class="gn-nav" aria-label="Site">
+            <a href="../">Home</a>
+            <a href="../text-vectorization/">Text vectorization</a>
+            <a href="./index1.html" aria-current="page">Transformers</a>
+            <a href="./index.html" title="Monospace / verbatim layout">Original</a>
+          </nav>
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+
+      <h1 class="gn-page-title">Transformers</h1>
+      <p class="gn-page-sub">Day 05 (18 April), Transformer and Attention Mechanism.</a>.</p>
+
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#intro">Overview</a>
+        <a href="#rnn">RNN</a>
+        <a href="#lstm">LSTM</a>
+        <a href="#seq2seq">Seq2Seq &amp; Attention</a>
+        <a href="#transformer">Transformer</a>
+      </nav>
+
+      <div id="infoBox" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+      <section class="gn-section gn-prose-notes" id="intro" aria-labelledby="intro-heading">
+        <h2 id="intro-heading">Day 05 overview</h2>
+        <p><strong>Day 05 - 18 April Transformer -  Attention Mechanism</strong></p>
+        <p>Understand the evolution from RNN → LSTM → Seq2Seq → Transformers</p>
+      </section>
+
+      <section class="gn-section gn-prose-notes" id="rnn" aria-labelledby="rnn-heading">
+        <h2 id="rnn-heading">Recurrent Neural Networks (RNN)</h2>
+        <p><strong>Recurrent Neural Networks (RNN)</strong> - sequential or time-dependent data—where the order of inputs matters.</p>
+        <p><strong>Key Concept:</strong>&nbsp;RNNs process sequences by maintaining a "memory" of previous inputs through hidden states (hidden state is the model’s internal memory that carries information from previous time steps to the current step).</p>
+
+        <h3>At each time step:</h3>
+        <ul>
+          <li>The network takes the current input</li>
+          <li>Combines it with the previous hidden state</li>
+          <li>Produces a new hidden state</li>
+        </ul>
+        <p>This hidden state acts as the network’s memory, carrying information forward through the sequence.</p>
+
+        <h3>Gradient :</h3>
+        <p>Think of standing on a hill:</p>
+        <ul>
+          <li>The gradient tells you which direction is uphill</li>
+          <li>And how steep the slope is</li>
+        </ul>
+        <p>In machine learning, the “hill” represents the loss (error) function, and we want to go downhill to minimize error.</p>
+
+        <h3>In Neural Networks</h3>
+        <p>The gradient measures how sensitive the loss is to changes in each parameter (weights and biases).</p>
+
+        <h3>⚠️ RNN Problems</h3>
+        <ul>
+          <li>Vanishing Gradient: During backpropagation through time, gradients become extremely small, making it impossible to learn long-term dependencies</li>
+          <li>Exploding Gradient: Gradients become too large, causing unstable training</li>
+          <li>Short-term Memory: Cannot remember information from many steps back</li>
+        </ul>
+      </section>
+
+      <section class="gn-section gn-prose-notes" id="lstm" aria-labelledby="lstm-heading">
+        <h2 id="lstm-heading">LSTM</h2>
+        <p><strong>LSTM (Long Short-Term Memory)-</strong> Designed to remember information for long periods and avoid problems like vanishing gradients.</p>
+
+        <h3>Solution to RNN problems</h3>
+
+        <h3>🚪 The Three Gates</h3>
+
+        <p><strong>1️⃣ Forget Gate:</strong> Decides what information to throw away from cell state</p>
+        <p><em>Example: Like cleaning your desk - you decide which papers to keep and which to throw away</em></p>
+
+        <p><strong>2️⃣ Input Gate:</strong> Decides what new information to store in cell state</p>
+        <ul>
+          <li>Two parts: What to update + What values to add</li>
+        </ul>
+
+        <p><strong>3️⃣ Output Gate:</strong> Decides what to output based on cell state</p>
+
+        <p>👨‍🏫 <em>Nooruddin: "The beauty of LSTM is that it solves the vanishing gradient problem. The cell state acts like a highway where information can flow unchanged."</em></p>
+        <p>👨‍🎓 <em>Student Question: "Sir, why do we use sigmoid for gates and tanh for cell state?"</em></p>
+        <p>👨‍🏫 <em>Nooruddin: "Excellent question! Sigmoid outputs 0-1, perfect for gates (like switches - on/off). Tanh outputs -1 to 1, better for cell state values which can be positive or negative."</em></p>
+
+        <h3>⚠️ Even LSTM Has Limitations</h3>
+        <ul>
+          <li>Still processes sequences sequentially (one word at a time)</li>
+          <li>Cannot be parallelized - slow training</li>
+          <li>For very long sequences (&gt;1000 tokens), still struggles</li>
+          <li>Computational cost increases with sequence length</li>
+        </ul>
+      </section>
+
+      <section class="gn-section gn-prose-notes" id="seq2seq" aria-labelledby="seq2seq-heading">
+        <h2 id="seq2seq-heading">Seq2Seq &amp; Attention</h2>
+        <p><strong>Sequence-to-Sequence (Seq2Seq)</strong> : Seq2Seq is a neural network framework designed to transform one sequence into another sequence. It is widely used in NLP tasks like machine translation, summarization, and question answering.</p>
+        <p><strong>Traditional ML models struggle when:</strong></p>
+        <ul>
+          <li>Input and output lengths are different</li>
+          <li>Output depends on full sentence context</li>
+          <li>Order of words matters</li>
+        </ul>
+
+        <h3><strong>High-Level Idea</strong></h3>
+        <p>Seq2Seq consists of two main components:</p>
+        <ul>
+          <li><strong>Encoder</strong> → Reads input sequence</li>
+          <li><strong>Decoder</strong> → Generates output sequence</li>
+        </ul>
+
+        <h3><strong>Encoder (Understanding the input)</strong></h3>
+        <p>The encoder processes input tokens one by one.</p>
+        <p><strong>Steps:</strong></p>
+        <ul>
+          <li>Input sentence is tokenized</li>
+          <li>Each token is converted into embeddings</li>
+          <li>RNN/LSTM/GRU processes sequence step-by-step</li>
+          <li>Final hidden state summarizes entire input</li>
+        </ul>
+        <p><strong>Output:</strong><br>A fixed-size representation called:  Context Vector (thought vector)</p>
+
+        <h3><strong>Decoder (Generating output)</strong></h3>
+        <p>The decoder generates output word by word</p>
+        <p><strong>Steps:</strong></p>
+        <ol>
+          <li>Takes context vector from encoder</li>
+          <li>Starts with special token &lt;SOS&gt;</li>
+          <li>Predicts next word using previous output</li>
+          <li>Continues until &lt;EOS&gt; token</li>
+        </ol>
+        <p><strong>Key property:</strong><br>It is auto-regressive</p>
+        <ul>
+          <li>Each output depends on previous outputs</li>
+        </ul>
+
+        <h3><strong>Limitation of Seq2Seq</strong></h3>
+        <p><strong>Problem:</strong> Bottleneck issue</p>
+        <ul>
+          <li>Entire sentence compressed into single vector</li>
+          <li>Long sentences lose information</li>
+        </ul>
+        <p><strong>👉 Example:</strong> Long paragraph → context vector becomes weak</p>
+
+        <h3><strong></strong>Attention Mechanism (Improvement)</strong></h3>
+        <p>To solve bottleneck: Decoder does NOT rely only on final encoder state</p>
+        <p><strong>Instead:</strong></p>
+        <ul>
+          <li>It looks at all encoder hidden states</li>
+          <li>Learns which words are important</li>
+ 
+        </ul>
+        <p><strong>This is called : Attention-based Seq2Seq</strong></p>
+      </section>
+
+      <section class="gn-section gn-prose-notes" id="transformer" aria-labelledby="transformer-heading">
+        <h2 id="transformer-heading">Transformer Model</h2>
+
+        <h3>Transformer Model – Complete Summary</h3>
+        <p>The Transformer Revolution :</p>
+        <p>🎆 Why Transformers Changed Everything</p>
+        <p>✅ How Transformers Solve All Previous Problems</p>
+
+        <table class="gn-compare-table" aria-label="Problems vs architectures vs Transformer">
+          <thead>
+            <tr>
+              <th scope="col">Problem</th>
+              <th scope="col">Previous Architectures</th>
+              <th scope="col">Transformer Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sequential Processing</td>
+              <td>RNN/LSTM must process word-by-word</td>
+              <td>Parallel Processing - All words at once!</td>
+            </tr>
+            <tr>
+              <td>Long-range Dependencies</td>
+              <td>LSTM struggles with 1000+ tokens</td>
+              <td>Self-Attention - Every word attends to every other word directly</td>
+            </tr>
+            <tr>
+              <td>Vanishing Gradients</td>
+              <td>Gradients diminish through layers</td>
+              <td>Skip Connections &amp; Layer Norm maintain gradient flow</td>
+            </tr>
+            <tr>
+              <td>Training Speed</td>
+              <td>Slow due to sequential nature</td>
+              <td>GPUs can parallelize - Train on entire sequence simultaneously</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5.1. Background (Why Transformers?) ; 👉 Transformer = “Every word attends to every other word using attention instead of recurrence.”</h3>
+        <p>Before Transformers, most NLP systems used:</p>
+        <ul>
+          <li>RNN / LSTM → process tokens sequentially (slow, hard to parallelize)</li>
+          <li>CNN-based models → better parallelism but limited long-range dependency handling</li>
+          <li>Seq2Seq with attention → improved translation, but still RNN-based bottleneck</li>
+        </ul>
+        <p>Key Problem:</p>
+        <ul>
+          <li>Sequential processing made training slow</li>
+          <li>Difficulty in capturing long-range dependencies</li>
+        </ul>
+        <p>Key Idea of Transformer:</p>
+        <p>👉 Replace recurrence entirely with attention mechanism&#x2028;👉 Enable full parallel processing of sequences</p>
+
+        <h3>5.2. Model Architecture Overview</h3>
+        <h3>Transformer Architecture</h3>
+        <img class="transformer-hero-img" src="../assets/images/transformers.png" alt="Transformer Architecture Diagram" loading="lazy">
+		<p>Left architecture is the "Encoder" and the right is the "Decoder":</p>
+
+        <p>Transformer is a Sequence-to-Sequence (Seq2Seq) model with:</p>
+        <ul>
+          <li>Encoder stack</li>
+          <li>Decoder stack</li>
+        </ul>
+        <p><strong>Two Main Components:</strong></p>
+        <ul>
+          <li><strong>Encoder:</strong> Processes input sequence and creates context-aware representations</li>
+          <li><strong>Decoder:</strong> Generates output sequence using encoded information</li>
+        </ul>
+        <p>Each stack has N identical layers</p>
+        <p>Input Representation</p>
+
+        <h3>2.1 Input Embeddings</h3>
+        <ul>
+          <li>Input sentence → tokenized into words/subwords</li>
+          <li>Each token → converted into vector of size d_model</li>
+        </ul>
+        <p>👉 Output: Input Matrix: (sequence_length × d_model)</p>
+        <ul>
+          <li>Example:</li>
+          <li>“I love NLP”</li>
+          <li> 3 tokens → each mapped to embedding vector</li>
+       
+        </ul>
+
+        <h3>2.2 Positional Encoding (PE) ; PE is a technique used in transformer-based models (like BERT, GPT, and BERT) to inject information about the order of tokens in a sequence.</h3>
+        <p>Unlike Recurrent Neural Networks (RNNs) that process words sequentially, transformers process all words in parallel, which means they do not inherently know the order of words. PE provides this missing order information by adding a unique, positional vector to each input token's embedding</p>
+        <p>Since Transformer has no recurrence:</p>
+        <p>So we add:</p>
+        <ul>
+          <li>Positional encoding vector to embeddings</li>
+        </ul>
+        <p>Formula intuition:</p>
+        <ul>
+          <li>Uses sine/cosine functions</li>
+          <li>Encodes word position information</li>
+        </ul>
+
+        <h3>5.3. Encoder Architecture</h3>
+		<p><strong>Encoder:</strong> The encoder takes the input sequence and processes it through multiple layers of self-attention and feed-forward networks. It captures the contextual information of each word based on the entire sequence.</p>
+        <p>Each encoder layer has:</p>
+        <ol>
+          <li>Self-Attention</li>
+          <li>Feed Forward Network (FFN)</li>
+          <li>Add &amp; Normalize</li>
+        </ol>
+
+        <h3>5.3.1 Self-Attention Mechanism</h3>
+
+        <p>Instead of processing sequences step-by-step, Transformers look at ALL words simultaneously and learn which words are most relevant to each other.</p>
+        <p>"Imagine you're at a party. RNN is like talking to people one-by-one in a line. Transformer is like being able to see and hear EVERYONE at once, and deciding who to pay attention to!"</p>
+        <p>Attention Mechanism - The Heart of Transformers</p>
+        <p>The Famous "Apple" Example</p>
+        <p>Sentence: "I ate an apple while using my Apple laptop."</p>
+        <p>The Problem: The word "apple" appears twice but has completely different meanings!</p>
+        <ul>
+          <li>First "apple" = Fruit 🍎 (should attend to "ate")</li>
+          <li>Second "Apple" = Company 💻 (should attend to "laptop", "using")</li>
+        </ul>
+        <p>The Solution: Attention mechanism makes embeddings context-aware!</p>
+
+        <h3>🔑 Query, Key, Value (QKV) - The Core Concept</h3>
+        <p>Each token generates:</p>
+        <ul>
+          <li>Query (Q)</li>
+          <li>Key (K)</li>
+          <li>Value (V)</li>
+        </ul>
+        <p>Example :<br>Library Analogy:</p>
+        <p>Imagine you're in a library looking for books about Machine Learning:"</p>
+        <ul>
+          <li>Query (Q): What you're looking for = "I need Machine Learning books"</li>
+          <li>Key (K): Labels on each book = "This book is about: Deep Learning, NLP, Computer Vision..."</li>
+          <li>Value (V): The actual content of the books</li>
+        </ul>
+
+        <div class="gn-diagram">
+          <h3>🔑 Interactive QKV Flow</h3>
+          <div class="gn-flow">
+            <div class="gn-node q" onclick="showInfo('q')">Query (Q)</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node k" onclick="showInfo('k')">Key (K)</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node v" onclick="showInfo('v')">Value (V)</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node attn" onclick="showInfo('a')">Attention</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node o" onclick="showInfo('o')">Output</div>
+          </div>
+        </div>
+
+        <p>You compare your Query with all the Keys to find which books are most relevant, then you read those Values!</p>
+        <p>Attention computation:</p>
+        <ul>
+          <li>Compare Q with K → similarity score</li>
+          <li>Apply softmax → weights</li>
+          <li>Multiply with V → output representation</li>
+        </ul>
+
+        <h3>5.3.2 Multi-Head Attention</h3>
+		<p>Multi-head attention in the encoder block: plays a crucial role in capturing different types of information and learning diverse relationships between words. It allows the model to attend to different parts of the input sequence simultaneously and learn multiple representations of the same input.</p>
+
+        <p>Instead of one attention:</p>
+        <p>👉 Use h parallel attention heads</p>
+        <p>Each head learns different patterns:</p>
+        <ul>
+          <li>Syntax</li>
+          <li>Semantics</li>
+          <li>Word relationships</li>
+        </ul>
+        <p>Final output:</p>
+        <ul>
+          <li>Concatenate heads</li>
+          <li>Linear projection</li>
+        </ul>
+
+        <div class="gn-diagram">
+          <h3>🔄 Attention Flow</h3>
+          <div class="gn-flow">
+            <div class="gn-node" onclick="showInfo('i')">Input Tokens</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node" onclick="showInfo('p')">QKV Projection</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node" onclick="showInfo('s')">Similarity Scores (Q·K)</div>
+            <div class="gn-arrow">→</div>
+            <div class="gn-node" onclick="showInfo('w')">Weighted Output</div>
+          </div>
+        </div>
+
+        <h3>5.3.3 Feed Forward Network (FFN) : Applied independently to each position and Adds non-linearity and feature transformation</h3>
+        <h3>3.4 Add &amp; Normalize</h3>
+        <p>Each sub-layer uses:</p>
+        <p>Residual Connection:</p>
+        <ul>
+          <li>Input + Output</li>
+        </ul>
+        <p>Layer Normalization:</p>
+        <ul>
+          <li>Stabilizes training</li>
+        </ul>
+        <p>👉 Helps gradient flow and deep stacking</p>
+
+        <h3>5.4. Decoder Architecture</h3>
+		<p><strong>Decoder:</strong> The decoder generates the output sequence word by word, attending to the encoded input sequence's relevant parts. It also includes an additional attention mechanism called "encoder-decoder attention" that helps the model focus on the input during decoding.</p>
+        <p>Decoder is similar to encoder but includes:</p>
+        <ol>
+          <li>Masked Self-Attention</li>
+          <li>Encoder-Decoder Attention</li>
+          <li>Feed Forward Network</li>
+          <li>Add &amp; Normalize</li>
+        </ol>
+		<p><strong>Masked Multi-head attention in the decoder block:</strong> the same as Multi-head attention in the encoder block but this time for the translation sentence, is used to ensure that during the decoding process, each word can only attend to the words before it. This masking prevents the model from accessing future information, which is crucial for generating the output sequence step by step.</p>
+
+		<p><strong>Multi-head attention in the decoder block:</strong> do the same as the Multi-head attention in the encoder block but between the input sentence and the translation sentence, is employed to capture different relationships between the input sequence and the generated output sequence. It allows the decoder to attend to different parts of the encoder's output and learn multiple representations of the context.</p>
+        <h3>5.4.1 Masked Multi-Head Attention</h3>
+        <p>Used during training/inference:</p>
+        <p>👉 Prevents looking at future tokens</p>
+        <p>Example:</p>
+        <ul>
+          <li>Predict word 3 → cannot see word 4 or 5</li>
+        </ul>
+        <p>This ensures:</p>
+        <ul>
+          <li>Auto-regressive generation</li>
+        </ul>
+
+        <h3>5.4.2 Encoder-Decoder Attention</h3>
+        <ul>
+          <li>Queries come from decoder</li>
+          <li>Keys &amp; Values come from encoder</li>
+        </ul>
+        <p>👉 Helps decoder focus on relevant input words</p>
+        <p>Example:</p>
+        <ul>
+          <li>Translating English → French</li>
+          <li>Decoder attends to encoder outputs</li>
+        </ul>
+
+        <h3>5.5 Why Transformer Works Better</h3>
+        <p>Compared to RNN/LSTM:</p>
+        <ul>
+          <li>No sequential bottleneck</li>
+          <li>Fully parallel training</li>
+          <li>Better long-range dependency handling</li>
+        </ul>
+        <p>Compared to CNN:</p>
+        <ul>
+          <li>Captures global relationships directly</li>
+        </ul>
+		<h3><strong>5.6 Output:</strong></h3>
+		<p>The final layer of the decoder is a linear projection followed by a softmax activation function. It produces a probability distribution over the vocabulary, allowing the model to generate the output word by sampling from this distribution.</p>
+		<strong>Softmax & Linear Projection:</strong>
+		<p><strong>Softmax : </strong> It is used to convert the output of the linear projection into a probability distribution. It ensures that the sum of the probabilities is equal to 1, allowing the model to generate the output word by sampling from this distribution.</p>
+		<p><strong>Linear : </strong>Convert the embeddings to word again (it just has weights not biases.)</p>
+		
+	</section>
+    </main>
+
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+  <script>
+    window.showInfo = function (type) {
+      var data = {
+        q: "Query (Q): What the model is looking for in the input.",
+        k: "Key (K): Represents features of each word used for matching.",
+        v: "Value (V): The actual information carried forward.",
+        a: "Attention: Q is matched with K to compute relevance scores.",
+        o: "Output: Weighted sum of Value vectors based on attention scores.",
+        i: "Input tokens are first converted into embeddings.",
+        p: "Each token is projected into Query, Key, and Value vectors.",
+        s: "Q·K determines how much attention each token gets.",
+        w: "Final weighted sum of Value vectors produces context-aware output."
+      };
+
+      var box = document.getElementById("infoBox");
+      if (!box) {
+        console.error("infoBox missing");
+        return;
+      }
+
+      var text = data[type];
+      if (text == null) {
+        return;
+      }
+
+      box.textContent = text;
+      box.hidden = false;
+
+      requestAnimationFrame(function () {
+        box.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+      });
+    };
+  </script>
+  <script src="../assets/js/theme.js" defer></script>
+</body>
+</html>

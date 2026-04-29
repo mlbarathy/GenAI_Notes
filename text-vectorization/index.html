@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Text vectorization: BoW, TF-IDF, Word2Vec, GloVe, FastText — notes for NLP and GenAI.">
+  <title>Text vectorization · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+        <div class="gn-header__actions">
+          <nav class="gn-nav" aria-label="Site">
+            <a href="../">Home</a>
+            <a href="./" aria-current="page">Text vectorization</a>
+            <a href="../transformers/">Transformers</a>
+          </nav>
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+
+      <h1 class="gn-page-title">Text vectorization</h1>
+      <p class="gn-page-sub">How text becomes numbers: classic representations from count-based bags to learned embeddings.</p>
+
+      <p class="gn-lead">
+        <strong>Text vectorization</strong> means turning text into numeric vectors so models can process it. The methods below differ in how they count, weight, or <em>learn</em> those numbers—and in whether they capture word order, rarity, or meaning.
+      </p>
+
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#bow">Bag of Words</a>
+        <a href="#tfidf">TF‑IDF</a>
+        <a href="#word2vec">Word2Vec</a>
+        <a href="#glove">GloVe</a>
+        <a href="#fasttext">FastText</a>
+      </nav>
+
+      <section class="gn-section" id="bow" aria-labelledby="bow-heading">
+        <h2 id="bow-heading">Bag of Words (BoW)</h2>
+        <p><strong>Idea:</strong> Count how many times each word from a shared vocabulary appears in a document. Order is ignored.</p>
+
+        <pre class="gn-pre" aria-label="Example corpus and vectors">Corpus:
+D1 - "I love NLP"
+D2 - "I love AI"
+
+Vocabulary: [I, love, NLP, AI]
+
+Vectors:
+D1 → [1, 1, 1, 0]
+D2 → [1, 1, 0, 1]</pre>
+
+        <h3>Advantages</h3>
+        <ul>
+          <li>Simple and easy to implement</li>
+          <li>Fine for baseline classification and small data</li>
+        </ul>
+
+        <h3>Disadvantages</h3>
+        <ul>
+          <li>Ignores word order (e.g. “love I NLP” can match “I love NLP”)</li>
+          <li>No real notion of context or meaning</li>
+          <li>Sparse, high-dimensional vectors (many zeros)</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Basic text classification (e.g. spam vs not spam)</li>
+          <li>Small, controlled vocabularies</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="tfidf" aria-labelledby="tfidf-heading">
+        <h2 id="tfidf-heading">TF‑IDF (term frequency – inverse document frequency)</h2>
+        <p><strong>Idea:</strong> Scale raw counts: frequent words in <em>one</em> document (TF) matter, but words that appear in <em>every</em> document get down‑weighted (IDF).</p>
+
+        <ul>
+          <li><strong>TF</strong> — how often a term appears in a document (normalized in practice).</li>
+          <li><strong>IDF</strong> — rare across the corpus → higher weight; very common (e.g. “the”, “is”) → lower.</li>
+        </ul>
+
+        <h3>Intuition</h3>
+        <ul>
+          <li>“food” in every document → not very discriminating (low final weight if truly ubiquitous).</li>
+          <li>“good” / “bad” in reviews → can carry more weight when contrastive.</li>
+          <li>Discriminative, somewhat rare terms often rank higher than stopwords.</li>
+        </ul>
+
+        <p>Not all words are equally important. <strong>TF‑IDF</strong> downplays globally common terms and upweights terms that are more specific to a document or a small set of documents.</p>
+
+        <h3>Pros</h3>
+        <ul>
+          <li>Better than raw BoW for search, ranking, and “what is this document about”</li>
+          <li>Reduces noise from function words (when they appear in many documents)</li>
+        </ul>
+
+        <h3>Cons</h3>
+        <ul>
+          <li>Still no true semantic similarity between different words (synonyms are separate dimensions)</li>
+          <li>Remains relatively sparse; no deep context</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Search, keywording, and classical IR baselines</li>
+          <li>Document similarity and feature engineering for tabular + text pipelines</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="word2vec" aria-labelledby="word2vec-heading">
+        <h2 id="word2vec-heading">Word2Vec</h2>
+        <p>Instead of hand counts only, <strong>learn</strong> dense vectors from data: similar usage patterns in context → similar vectors in space (cosine distance often used).</p>
+
+        <pre class="gn-pre" aria-label="Example dense vectors (illustrative)">king  → [0.25, -0.10, ...]
+queen → [0.27, -0.12, ...]</pre>
+        <p>Nearby vectors often reflect related meanings or syntactic relations (famous “vector arithmetic” demos).</p>
+
+        <h3>Training approaches</h3>
+        <ul>
+          <li><strong>CBOW</strong> — predict a word from its context window</li>
+          <li><strong>Skip-gram</strong> — predict context from the center word</li>
+        </ul>
+
+        <h3>Illustrative co-occurrence (conceptual)</h3>
+        <ul>
+          <li>“love” may appear near “food”, “hotel” in a sentiment corpus</li>
+          <li>“good” and “bad” can both appear near “food” with different class labels in supervised tasks</li>
+        </ul>
+
+        <pre class="gn-pre" aria-label="Example two-dimensional style vectors (toy)">love → [0.2, 0.8]
+food → [0.3, 0.7]
+good → [0.9, 0.1]
+bad  → [0.85, 0.15]</pre>
+
+        <h3>Pros</h3>
+        <ul>
+          <li><strong>Dense</strong> vectors (lower dimension than huge sparse BoW, in practice)</li>
+          <li>Captures analogies and similarity better than count-only methods</li>
+        </ul>
+
+        <h3>Cons</h3>
+        <ul>
+          <li>One vector per word type — polysemy (“bank” of river vs money) is a single point</li>
+          <li>Out-of-vocabulary words need a separate strategy (subword models, later)</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="glove" aria-labelledby="glove-heading">
+        <h2 id="glove-heading">GloVe (Global Vectors)</h2>
+        <p>Builds on <strong>global</strong> word co-occurrence statistics across the whole corpus (not only local window sampling). Combines the strengths of count-based and prediction-based ideas in one framework.</p>
+
+        <ul>
+          <li>“food” might co-occur with: love, hotel, good, bad, … in global counts</li>
+          <li>“good” might cluster with certain sentiment contexts; “bad” with others</li>
+        </ul>
+        <p>Uses <strong>global</strong> matrix information, not only sliding-window SGD in isolation.</p>
+
+        <h3>Pros</h3>
+        <ul>
+          <li>Strong, stable pretrained word vectors for many languages and domains</li>
+          <li>Often a solid default in classical NLP before contextual transformers</li>
+        </ul>
+
+        <h3>Cons</h3>
+        <ul>
+          <li>Still a single vector per word; sense disambiguation is limited</li>
+          <li>New/rare words need OOV handling (as with vanilla Word2Vec)</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Pretrained embeddings in pipelines, feature layers, and legacy systems</li>
+          <li>When you want interpretable, fixed-size word features without training from scratch</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="fasttext" aria-labelledby="fasttext-heading">
+        <h2 id="fasttext-heading">FastText</h2>
+        <p>Represents words (and in some settings, whole text) as sums of <strong>subword</strong> n-gram vectors. Rare words, typos, and morphological variants can still get reasonable vectors.</p>
+
+        <pre class="gn-pre" aria-label="Subword pieces (illustrative)">hotel → ho, hot, ote, tel, hotel, …
+food  → fo, foo, ood, food, …</pre>
+
+        <h3>Pros</h3>
+        <ul>
+          <li>Better coverage for <strong>unseen</strong> or rare word forms (via subwords)</li>
+          <li>Multilingual and noisy text can benefit; morphologically rich languages too</li>
+        </ul>
+
+        <h3>Cons</h3>
+        <ul>
+          <li>Somewhat more engineering and memory than a pure word-level model</li>
+          <li>Not sentence-level <em>context</em> like a Transformer—still (mostly) type-level in spirit</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Noisy user text, short snippets, and multilingual corpora</li>
+          <li>When you need OOV behavior without a huge lexicon</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+  <script src="../assets/js/theme.js" defer></script>
+</body>
+</html>
