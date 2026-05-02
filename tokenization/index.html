@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tokenization in NLP: word-level, character-level, and subword tokenization explained for GenAI.">
+  <title>Tokenization · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+        <div class="gn-header__actions">
+          <nav class="gn-nav" aria-label="Site">
+            <a href="../">Home</a>
+            <a href="./" aria-current="page">Tokenization</a>
+            <a href="../vectorization/">Text vectorization</a>
+            <a href="../transformers/">Transformers</a>
+            <a href="../forefirst/">ForeFirst</a>
+          </nav>
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+
+      <h1 class="gn-page-title">Tokenization</h1>
+      <p class="gn-page-sub">Breaking text into tokens: the first step before turning language into numbers.</p>
+
+      <p class="gn-lead">
+        <strong>Tokenization</strong> is the process of splitting raw text into smaller units called <em>tokens</em>, which are then mapped to numerical IDs for machine learning models. The way text is tokenized directly impacts model performance, efficiency, and understanding.
+      </p>
+
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#word">Word-level</a>
+        <a href="#character">Character-level</a>
+        <a href="#subword">Subword-level</a>
+      </nav>
+
+      <section class="gn-section" id="word" aria-labelledby="word-heading">
+        <h2 id="word-heading">Word-level Tokenization</h2>
+        <p><strong>Idea:</strong> Split text into individual words using spaces or punctuation.</p>
+
+        <pre class="gn-pre" aria-label="Word tokenization example">Sentence:
+"I love NLP"
+
+Tokens:
+["I", "love", "NLP"]</pre>
+
+        <h3>Advantages</h3>
+        <ul>
+          <li>Simple and intuitive</li>
+          <li>Easy to interpret and debug</li>
+        </ul>
+
+        <h3>Disadvantages</h3>
+        <ul>
+          <li>Large vocabulary size</li>
+          <li>Cannot handle unseen (out-of-vocabulary) words</li>
+          <li>Struggles with typos and variations</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Small datasets with controlled vocabulary</li>
+          <li>Basic NLP tasks and rule-based systems</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="character" aria-labelledby="character-heading">
+        <h2 id="character-heading">Character-level Tokenization</h2>
+        <p><strong>Idea:</strong> Break text into individual characters.</p>
+
+        <pre class="gn-pre" aria-label="Character tokenization example">Sentence:
+"hi"
+
+Tokens:
+["h", "i"]</pre>
+
+        <h3>Advantages</h3>
+        <ul>
+          <li>No out-of-vocabulary problem</li>
+          <li>Handles typos and rare words naturally</li>
+        </ul>
+
+        <h3>Disadvantages</h3>
+        <ul>
+          <li>Longer sequences → more computation</li>
+          <li>Loses semantic meaning at higher levels</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Languages with complex morphology</li>
+          <li>Tasks involving noisy or misspelled text</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="subword" aria-labelledby="subword-heading">
+        <h2 id="subword-heading">Subword-level Tokenization</h2>
+        <p><strong>Idea:</strong> Split words into smaller meaningful units (subwords) to balance vocabulary size and flexibility.</p>
+
+        <pre class="gn-pre" aria-label="Subword tokenization example">Word:
+"unhappiness"
+
+Tokens:
+["un", "happi", "ness"]</pre>
+
+        <h3>Common methods</h3>
+        <ul>
+          <li><strong>BPE (Byte Pair Encoding)</strong></li>
+          <li><strong>WordPiece</strong></li>
+          <li><strong>Unigram Language Model</strong></li>
+        </ul>
+
+        <h3>Advantages</h3>
+        <ul>
+          <li>Handles unseen words effectively</li>
+          <li>Smaller vocabulary than word-level</li>
+          <li>Captures meaningful patterns</li>
+        </ul>
+
+        <h3>Disadvantages</h3>
+        <ul>
+          <li>More complex to implement</li>
+          <li>Tokens may not always be human-readable</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Modern NLP and GenAI models (e.g., Transformers)</li>
+          <li>Large-scale multilingual datasets</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+  <script src="../assets/js/theme.js" defer></script>
+</body>
+</html>

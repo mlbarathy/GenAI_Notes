@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Foremost models: BERT, BART, GPT-1, GPT-2, GPT-3 — encoder/decoder roles, pre-training, and how each fits the Transformer family.">
+  <title>Foremost models · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+        <div class="gn-header__actions">
+          <nav class="gn-nav" aria-label="Site">
+            <a href="../">Home</a>
+            <a href="../text-vectorization/">Text vectorization</a>
+            <a href="../transformers/">Transformers</a>
+            <a href="./" aria-current="page">Foremost</a>
+          </nav>
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+
+      <h1 class="gn-page-title">Foremost models</h1>
+      <p class="gn-page-sub">Foundational Transformer-era architectures: bidirectional encoders, seq2seq denoising, and autoregressive GPT-style LMs.</p>
+
+      <p class="gn-lead">
+        <strong>Foremost models</strong> here means landmark systems built on the Transformer stack after the original “Attention Is All You Need” paper—covering both <em>encoder-rich</em> (BERT), <em>encoder–decoder</em> (BART), and <em>decoder-only</em> generative pre-training (GPT‑1/2/3).
+      </p>
+
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#overview">Overview</a>
+        <a href="#bert">BERT</a>
+        <a href="#bart">BART</a>
+        <a href="#gpt1">GPT‑1</a>
+        <a href="#gpt2">GPT‑2</a>
+        <a href="#gpt3">GPT‑3</a>
+      </nav>
+
+      <section class="gn-section" id="overview" aria-labelledby="overview-heading">
+        <h2 id="overview-heading">How these models relate</h2>
+        <p>All of the models below use Transformer layers, but they differ in <strong>objective</strong> (what is predicted during training), <strong>directionality</strong> (one token vs full context), and <strong>stack layout</strong> (encoder only, decoder only, or both).</p>
+        <ul>
+          <li><strong>BERT</strong> — encoder-only; masked language modeling learns bidirectional context.</li>
+          <li><strong>BART</strong> — encoder + decoder; text is corrupted then reconstructed (denoising).</li>
+          <li><strong>GPT‑1, GPT‑2, GPT‑3</strong> — decoder-only left-to-right language modeling at increasing scale; emphasis shifts from fine-tuning (GPT‑1) to broad few-shot / in-context use (GPT‑3).</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="bert" aria-labelledby="bert-heading">
+        <h2 id="bert-heading">BERT</h2>
+        <p><strong>BERT</strong> (Bidirectional Encoder Representations from Transformers) uses a <strong>Transformer encoder</strong> stack. Tokens attend in both directions within a segment, so each representation can use full left-and-right context.</p>
+        <h3>Pre-training (typical)</h3>
+        <ul>
+          <li><strong>Masked LM (MLM)</strong> — some tokens are hidden; the model predicts them from context.</li>
+          <li><strong>Next sentence prediction (NSP)</strong> — in original BERT, whether sentence B truly follows sentence A (later work often drops or replaces NSP).</li>
+        </ul>
+        <h3>Downstream use</h3>
+        <p>Fine-tune on task-specific heads for classification, NER, QA, etc. Strong when you need <em>rich token- or sentence-level representations</em> rather than open-ended long generation.</p>
+      </section>
+
+      <section class="gn-section" id="bart" aria-labelledby="bart-heading">
+        <h2 id="bart-heading">BART</h2>
+        <p><strong>BART</strong> combines a <strong>bidirectional encoder</strong> (BERT-like) with an <strong>autoregressive decoder</strong> (GPT-like). The encoder reads a <em>corrupted</em> version of the text; the decoder generates the original.</p>
+        <h3>Training idea</h3>
+        <ul>
+          <li><strong>Denoising autoencoder</strong> — corruptions include token masking, deletion, permutation, document rotation, etc.; the model learns to reconstruct clean text.</li>
+        </ul>
+        <h3>Good fit</h3>
+        <p>Summarization, translation, and other <strong>sequence-to-sequence</strong> tasks where output text should be <em>grounded</em> in a full input span.</p>
+      </section>
+
+      <section class="gn-section" id="gpt1" aria-labelledby="gpt1-heading">
+        <h2 id="gpt1-heading">GPT‑1</h2>
+        <p><strong>GPT</strong> (Generative Pre-Training) introduced a <strong>decoder-only Transformer</strong> trained as a standard <strong>left-to-right language model</strong> on unlabeled text, then adapted with supervised fine-tuning on labeled tasks.</p>
+        <h3>Recipe</h3>
+        <ul>
+          <li><strong>Unsupervised pre-training</strong> — predict the next token given prior tokens.</li>
+          <li><strong>Supervised fine-tuning</strong> — add a light task head (e.g. classification) with labeled data.</li>
+        </ul>
+        <p>Showed that a single pre-trained LM could transfer across tasks with minimal architectural changes.</p>
+      </section>
+
+      <section class="gn-section" id="gpt2" aria-labelledby="gpt2-heading">
+        <h2 id="gpt2-heading">GPT‑2</h2>
+        <p><strong>GPT‑2</strong> scaled up data and model size and demonstrated strong <strong>zero-shot</strong> behavior: the same LM, without task-specific fine-tuning, could often follow instructions implied by prompt formatting (e.g. continue a translation-style prefix).</p>
+        <ul>
+          <li>Still <strong>decoder-only</strong> next-token prediction.</li>
+          <li>Showed that scale + diverse web text → broader “emergent” task patterns at inference time.</li>
+        </ul>
+      </section>
+
+      <section class="gn-section" id="gpt3" aria-labelledby="gpt3-heading">
+        <h2 id="gpt3-heading">GPT‑3</h2>
+        <p><strong>GPT‑3</strong> pushed scale further and popularized <strong>in-context learning</strong>: condition the model with a few examples (or instructions) in the prompt and read off completions without weight updates.</p>
+        <ul>
+          <li><strong>Few-shot / one-shot / zero-shot</strong> regimes defined by how many labeled examples appear in the prompt.</li>
+          <li>Architecturally still a large <strong>autoregressive Transformer decoder</strong>.</li>
+        </ul>
+        <p>Practically, GPT‑3 anchored the “prompting + API” era for generative NLP and downstream product builders.</p>
+      </section>
+    </main>
+
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+  <script src="../assets/js/theme.js" defer></script>
+</body>
+</html>
