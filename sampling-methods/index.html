@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sampling Techniques: logits, softmax, argmax, temperature, top-k, top-p in GenAI.">
+  <title>Sampling Techniques · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+</head>
+
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+    
+        <!-- Logo -->
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+    
+        <div class="gn-header__actions">
+    
+          <nav class="gn-nav" aria-label="Site">
+    
+            <!-- Home -->
+            <a href="../">Home</a>
+    
+            <!-- Topics Dropdown -->
+            <div class="gn-dropdown">
+              <button class="gn-dropdown__btn" type="button">
+                Topics ▾
+              </button>
+    
+              <div class="gn-dropdown__menu">
+                <a href="../text-vectorization/">Text vectorization</a>
+                <a href="../transformers/">Transformers</a>
+                <a href="../foremost/">Foremost</a>
+                <a href="../tokenization/">Tokenization</a>
+                <a href="./" aria-current="page">Sampling Methods</a>
+              </div>
+            </div>
+    
+          </nav>
+    
+          <!-- Theme toggle -->
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">
+            🌙
+          </button>
+    
+        </div>
+      </div>
+    </header>
+
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+
+      <h1 class="gn-page-title">Sampling Techniques</h1>
+      <p class="gn-page-sub">How models choose the next token: logits → softmax → decoding strategies.</p>
+
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#logits">Logits</a>
+        <a href="#softmax">Softmax</a>
+        <a href="#argmax">Argmax</a>
+        <a href="#temperature">Temperature</a>
+        <a href="#topk">Top-k</a>
+        <a href="#topp">Top-p</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#usecases">Use Cases</a>
+      </nav>
+
+      <!-- LOGITS -->
+      <section class="gn-section" id="logits">
+        <h2>🔹 Logits</h2>
+
+        <p>In models like GPT, when predicting the next word/token:</p>
+        <ul>
+          <li>Model processes input text</li>
+          <li>Outputs a vector of logits (one score per possible token)</li>
+          <li>These logits are converted into probabilities using Softmax function</li>
+          <li>A token is selected (based on sampling strategy)</li>
+        </ul>
+
+        <!-- <pre class="gn-pre">Input text → Model → Logits → Softmax → Probabilities → Token selection</pre> -->
+        <pre class="gn-pre">Input → Model → Logits → Softmax → Probabilities → Argmax → Token Selection</pre>
+
+        <h3>How It Works</h3>
+        <ul>
+          <li>Sort tokens by probability</li>
+          <li>Keep only top K</li>
+          <li>Sample randomly from those</li>
+        </ul>
+      </section>
+
+      <!-- SOFTMAX -->
+      <section class="gn-section" id="softmax">
+        <h2>🔹 Softmax</h2>
+        <p>
+            <strong>Softmax : </strong> In Generative AI, the Softmax function is the step that converts a model’s raw outputs (logits) into probabilities that sum to 1.
+            Without Softmax, the model just has arbitrary scores. With Softmax, it can decide how likely each token is.
+          </p>
+        <ol>
+          <li>Converts scores into probabilities for Sample outputs & Make decisions</li>
+          <li>Enables randomness & creativity : Sampling (diverse outputs) & Controlled randomness (via temperature)</li>
+          <li>Preserves ranking : Higher logit → higher probability</li>
+        </ol>
+
+        <h3>Effect of Temperature on Softmax</h3>
+        <p>Temperature modifies logits before Softmax:</p>
+        <ul>
+          <li>Low temperature (0.2) → sharper probabilities (more deterministic)</li>
+          <li>High temperature (1.5) → flatter probabilities (more creative/random)</li>
+        </ul>
+
+        <h3>Key takeaway</h3>
+        <ul>
+          <li>Logits → raw scores</li>
+          <li>Softmax → converts to probabilities</li>
+          <li>Probabilities → used for token selection</li>
+        </ul>
+      </section>
+
+      <!-- ARGMAX -->
+      <section class="gn-section" id="argmax">
+        <h2>🔹 Argmax</h2>
+
+        <p>Selecting the token with the highest probability (or highest logit).</p>
+
+        <pre class="gn-pre">Input → Model → Logits → Softmax → Probabilities → Argmax → Output token</pre>
+
+        <h3>Example</h3>
+        <pre class="gn-pre">Let’s say the model predicts the next word after:
+
+"I am feeling"
+
+<strong>Probabilities After Softmax:</strong>
+
+<strong>Token   Probability</strong>
+happy   0.65
+tired   0.25
+hungry  0.10
+
+👉 Argmax output: happy (because it has the highest probability)</pre>
+
+        <h3>Key Characteristics</h3>
+        <ul>
+          <li><strong>Deterministic : </strong> Same input → Always same output and No randomness</li>
+          <li><strong>Fast & Simple : </strong> Just pick the max value</li>
+          <li><strong>No Creativity : </strong> Can be Repetitive & Always chooses the most likely word</li>
+        </ul>
+
+        <h3>Argmax vs Sampling</h3>
+        <pre class="gn-pre"><strong>Method          Behavior</strong>
+Argmax          Picks highest probability
+Sampling        Picks based on probability distribution</pre>
+      </section>
+      <h2>Sampling Techniques</h2>
+      <p>Sampling techniques are used to generate text from a model. They are used to control the randomness and creativity of the model's output.</p>
+      <ul>
+        <li><strong>Temperature : </strong> Controls how random or creative the model’s output is.</li>
+        <li><strong>Top-k : </strong> Selects the top k most likely tokens from the model's output.</li>
+        <li><strong>Top-p : </strong> Selects the tokens until the cumulative probability is greater than or equal to p.</li>
+      </ul>
+    </section>
+      <!-- TEMPERATURE -->
+      <section class="gn-section" id="temperature">
+        <h2>Temperature</h2>
+
+        <p><strong>Simple Definition</strong></p>
+        <ul>
+          <li>Controls how random or creative the model’s output is.</li>
+          <li><strong>Low Temperature  : </strong>  Deterministic, Predictable</li>
+          <li><strong>High Temperature : </strong> Creative, Diverse, Sometimes Chaotic</li>
+        </ul>
+
+        <h3>⚙️ How It Works Internally</h3>
+        <p>Model generates logits → applies at Softmax → gets probabilities.</p>
+        <p>Logits : Logits are the raw, unnormalized scores produced by a model before converting them into probabilities.</p>
+
+        <ul>
+          <li><strong>T &lt; 1 : </strong> Sharp Distribution (Less Randomness)</li>
+          <li><strong>T &gt; 1 : </strong> Flatter Distribution (More Randomness)</li>
+        </ul>
+
+        <h3>Real-World Use Cases</h3>
+        <ul>
+          <li>Chatbots (low T for accuracy)</li>
+          <li>Content generation (high T for creativity)</li>
+          <li>Code generation (very low T)</li>
+        </ul>
+
+        <h3>Example</h3>
+        <pre class="gn-pre"><strong>Prompt: </strong>"Write a tagline for a hotel"
+
+<strong>T = 0.2 : </strong> “Comfortable stay at affordable prices”
+<strong>T = 0.9 : </strong> “Where sunsets whisper luxury into every moment”</pre>
+
+        <h3>Pitfalls</h3>
+        <ul>
+          <li><strong>High T : </strong> Hallucinations</li>
+          <li><strong>Low T : </strong> Repetitive Output</li>
+        </ul>
+      </section>
+
+      <!-- TOP-K -->
+      <section class="gn-section" id="topk">
+        <h2>2. Top-k Sampling</h2>
+
+        <p>Model selects next token from top K most probable tokens only.</p>
+
+        <h3>⚙️ How It Works</h3>
+        <ul>
+          <li>Sort tokens by probability</li>
+          <li>Keep only top K</li>
+          <li>Sample randomly from those</li>
+        </ul>
+
+        <h3>📊 Impact</h3>
+        <pre class="gn-pre"><strong>K value    Behavior</strong> 
+1          Same as argmax
+10         Limited diversity
+50         Balanced
+100+       High diversity</pre>
+
+        <h3>💡 Example</h3>
+        <pre class="gn-pre"><strong>Token    Prob</strong> 
+luxury   0.4
+comfort  0.3
+stay     0.2
+cheap    0.1
+
+<strong>top_k = 2 : </strong> {luxury, comfort}
+<strong>top_k = 4 : </strong> all tokens</pre>
+
+        <h3>Pitfalls</h3>
+        <ul>
+          <li><strong>Small K : </strong> Repetitive</li>
+          <li><strong>Large K : </strong> Noisy</li>
+        </ul>
+      </section>
+
+      <!-- TOP-P -->
+      <section class="gn-section" id="topp">
+        <h2>op-p (Nucleus Sampling)</h2>
+
+        <p>Select tokens until cumulative probability ≥ p.</p>
+
+        <h3>How It Works</h3>
+        <p>Instead of fixed K:</p>
+        <ul>
+          <li>Keep adding tokens until sum ≥ p</li>
+        </ul>
+
+        <h3>📊 Impact</h3>
+        <pre class="gn-pre"><strong>p Value    Behavior</strong> 
+0.5        Conservative
+0.8        Balanced
+0.95       Creative</pre>
+
+        <h3>💡 Example</h3>
+        <pre class="gn-pre"><strong>Token   Prob</strong> 
+luxury  0.4
+comfort 0.3
+stay    0.2
+cheap   0.1
+
+p = 0.7 → {luxury, comfort}
+p = 0.9 → {luxury, comfort, stay}</pre>
+      </section>
+
+      <!-- COMPARISON -->
+      <section class="gn-section" id="comparison">
+        <h2>🔥 Comparison Table</h2>
+
+        <pre class="gn-pre">| <strong>Method</strong>      | <strong>Randomness</strong>  | <strong>Control</strong>     | <strong>Best For</strong>             |
+| ----------- | ----------- | ----------- | -------------------- |
+| Temperature | Medium–High | Fine-tuning | Creativity control   |
+| Top-k       | Medium      | Hard cutoff | Controlled diversity |
+| Top-p       | Medium–High | Adaptive    | Production systems   |
+| Argmax      | None        | Full        | Deterministic tasks  |</pre>
+      </section>
+
+      <!-- USE CASE -->
+      <section class="gn-section" id="usecases">
+        <h2>✅ For use cases (data + APIs)</h2>
+
+        <pre class="gn-pre">| <strong>Use Case</strong>              | <strong>Recommended</strong>         |
+| --------------------- | ------------------- |
+| SQL generation        | temperature=0       |
+| Hotel recommendations | temp=0.5, top_p=0.9 |
+| Chatbot               | temp=0.7            |
+| Creative marketing    | temp=0.9            |</pre>
+      </section>
+
+      <!-- CODE -->
+      <section class="gn-section">
+        <h2>⚙️ Code Example (Python)</h2>
+
+        <pre class="gn-pre">response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "Suggest hotel tagline"}],
+    temperature=0.8,
+    top_k=50,
+    top_p=0.9
+)</pre>
+      </section>
+
+    </main>
+
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+
+  <script src="../assets/js/theme.js" defer></script>
+  
+</body>
+</html>

@@ -11,18 +11,42 @@
   <div class="gn-site">
     <header class="gn-header">
       <div class="gn-header__inner">
+    
+        <!-- Logo -->
         <a class="gn-logo" href="../">
           <span class="gn-logo__mark" aria-hidden="true">G</span>
           GenAI Notes
         </a>
+    
         <div class="gn-header__actions">
+    
           <nav class="gn-nav" aria-label="Site">
+    
+            <!-- Home -->
             <a href="../">Home</a>
-            <a href="../text-vectorization/">Text vectorization</a>
-            <a href="../transformers/">Transformers</a>
-            <a href="./" aria-current="page">Foremost</a>
+    
+            <!-- Topics Dropdown -->
+            <div class="gn-dropdown">
+              <button class="gn-dropdown__btn" type="button">
+                Topics ▾
+              </button>
+    
+              <div class="gn-dropdown__menu">
+                <a href="../text-vectorization/">Text vectorization</a>
+                <a href="../transformers/">Transformers</a>
+                <a href="./" aria-current="page">Foremost</a>
+                <a href="../tokenization/">Tokenization</a>
+                <a href="../sampling-methods/">Sampling Methods</a>
+              </div>
+            </div>
+    
           </nav>
-          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+    
+          <!-- Theme toggle -->
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">
+            🌙
+          </button>
+    
         </div>
       </div>
     </header>

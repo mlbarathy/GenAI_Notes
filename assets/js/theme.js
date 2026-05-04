@@ -84,6 +84,8 @@
     initSectionCollapse();
   }
 
+  
+
   apply(localStorage.getItem(key));
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", onReady);
@@ -91,3 +93,32 @@
     onReady();
   }
 })();
+
+// ---- Dropdown (Topics Menu) ----
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".gn-dropdown");
+  const btn = document.querySelector(".gn-dropdown__btn");
+
+  if (!dropdown || !btn) {
+    console.error("Dropdown elements missing");
+    return;
+  }
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dropdown.classList.toggle("open");
+
+    console.log("Open state:", dropdown.classList.contains("open"));
+  });
+
+  document.addEventListener("click", () => {
+    dropdown.classList.remove("open");
+  });
+
+  dropdown.querySelector(".gn-dropdown__menu")
+    .addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+});

@@ -11,19 +11,43 @@
   <div class="gn-site">
     <header class="gn-header">
       <div class="gn-header__inner">
+    
+        <!-- Logo -->
         <a class="gn-logo" href="./" aria-current="page">
           <span class="gn-logo__mark" aria-hidden="true">G</span>
           GenAI Notes
         </a>
+    
         <div class="gn-header__actions">
+    
+          <!-- NAV -->
           <nav class="gn-nav" aria-label="Site">
+    
+            <!-- Home -->
             <a href="./">Home</a>
-            <a href="text-vectorization/">Text vectorization</a>
-            <a href="transformers/">Transformers</a>
-            <a href="foremost/">Foremost Models</a>
-            <a href="tokenization/">Tokenization</a>
-          </nav>
-          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+    
+            <!-- Dropdown -->
+            <div class="gn-dropdown">
+              <button class="gn-dropdown__btn" type="button">
+                Topics ▾
+              </button>
+    
+              <div class="gn-dropdown__menu">
+                <a href="text-vectorization/">Text vectorization</a>
+                <a href="transformers/">Transformers</a>
+                <a href="foremost/">Foremost Models</a>
+                <a href="tokenization/">Tokenization</a>
+                <a href="sampling-methods/">Sampling Methods</a>
+              </div>
+            </div>
+    
+          
+    
+          <!-- Theme toggle -->
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">
+            🌙
+          </button>
+    
         </div>
       </div>
     </header>
@@ -37,28 +61,34 @@
 
       <div class="gn-grid gn-grid--2 gn-grid--3">
         <a class="gn-card" href="text-vectorization/">
-          <div class="gn-card__icon" aria-hidden="true">◇</div>
-          <h2>Text vectorization</h2>
+          <div class="gn-card__icon" aria-hidden="true">✿</div>
+          <h2>Text Vectorization</h2>
           <p>From bag-of-words to dense embeddings: BoW, TF-IDF, Word2Vec, GloVe, and FastText—strengths, limits, and when to use them.</p>
           <span class="gn-card__link">Read notes <span aria-hidden="true">→</span></span>
         </a>
         <a class="gn-card" href="transformers/">
           <div class="gn-card__icon" aria-hidden="true">◎</div>
-          <h2>Transformers &amp; attention</h2>
+          <h2>Transformers Insights</h2>
           <p>RNN, LSTM, Seq2Seq, the bottleneck, attention, and the Transformer stack—encoders, decoders, self-attention, and why parallel training changed NLP.</p>
           <span class="gn-card__link">Read notes <span aria-hidden="true">→</span></span>
         </a>
         <a class="gn-card" href="foremost/">
-          <div class="gn-card__icon" aria-hidden="true">⎔</div>
+          <div class="gn-card__icon" aria-hidden="true">𖣘</div>
           <h2>Foremost Models</h2>
           <p>BERT, BART, GPT‑1, GPT‑2, and GPT‑3 
             <p>Encoder-only /  Scaling Decoder-only LMs.</p>
           <span class="gn-card__link">Read notes <span aria-hidden="true">→</span></span>
         </a>
         <a class="gn-card" href="tokenization/">
-          <div class="gn-card__icon" aria-hidden="true">⎔</div>
+          <div class="gn-card__icon" aria-hidden="true">𖥑</div>
           <h2>Tokenization</h2>
           <p>Tokens & Types</p>
+          <span class="gn-card__link">Read notes <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="gn-card" href="sampling-methods/">
+          <div class="gn-card__icon" aria-hidden="true">⬢</div>
+          <h2>Sampling Methods</h2>
+          <p>Logits, Softmax, Argmax, Temperature, Top-k, Top-p</p>
           <span class="gn-card__link">Read notes <span aria-hidden="true">→</span></span>
         </a>
 

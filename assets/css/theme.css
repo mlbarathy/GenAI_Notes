@@ -461,6 +461,61 @@ a.gn-back:hover {
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
+/* Parent */
+.gn-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Button */
+.gn-dropdown__btn {
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* MENU (hidden by default) */
+.gn-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+
+  min-width: 220px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem 0;
+
+  z-index: 9999;
+
+  /* IMPORTANT: hidden state */
+  display: none;
+}
+
+/* Links */
+.gn-dropdown__menu a {
+  display: block;
+  padding: 0.6rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.gn-dropdown__menu a:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+}
+
+/* OPEN STATE */
+.gn-dropdown.open .gn-dropdown__menu {
+  display: block;
+}
+
+
+
 pre,
 .gn-pre {
   font-family: var(--font-mono);
