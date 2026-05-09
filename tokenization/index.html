@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Tokenization in NLP: word-level, character-level, and subword tokenization explained for GenAI.">
-  <title>Tokenization · GenAI Notes</title>
+  <title>Tokenization· GenAI Notes</title>
   <link rel="stylesheet" href="../assets/css/theme.css">
 </head>
 <body>
@@ -71,11 +71,9 @@
         <h2 id="word-heading">Word-level Tokenization</h2>
         <p><strong>Idea:</strong> Split text into individual words using spaces or punctuation.</p>
 
-        <pre class="gn-pre" aria-label="Word tokenization example">Sentence:
-"I love NLP"
-
-Tokens:
-["I", "love", "NLP"]</pre>
+        <pre class="gn-pre" aria-label="Word tokenization example">
+          <strong>Sentence :</strong> "I love NLP"
+          <strong>Tokens    :</strong> ["I", "love", "NLP"]</pre>
 
         <h3>Advantages</h3>
         <ul>
@@ -101,11 +99,9 @@ Tokens:
         <h2 id="character-heading">Character-level Tokenization</h2>
         <p><strong>Idea:</strong> Break text into individual characters.</p>
 
-        <pre class="gn-pre" aria-label="Character tokenization example">Sentence:
-"hi"
-
-Tokens:
-["h", "i"]</pre>
+        <pre class="gn-pre" aria-label="Character tokenization example">
+          <strong>Sentence :</strong> "hi"
+          <strong>Tokens    :</strong> ["h", "i"]</pre>
 
         <h3>Advantages</h3>
         <ul>
@@ -130,11 +126,9 @@ Tokens:
         <h2 id="subword-heading">Subword-level Tokenization</h2>
         <p><strong>Idea:</strong> Split words into smaller meaningful units (subwords) to balance vocabulary size and flexibility.</p>
 
-        <pre class="gn-pre" aria-label="Subword tokenization example">Word:
-"unhappiness"
-
-Tokens:
-["un", "happi", "ness"]</pre>
+        <pre class="gn-pre" aria-label="Subword tokenization example">
+          <strong>Word    :</strong>  "unhappiness"
+          <strong>Tokens  :</strong>  ["un", "happi", "ness"]</pre>
 
         <h3>Common methods</h3>
         <ul>
@@ -162,6 +156,57 @@ Tokens:
           <li>Large-scale multilingual datasets</li>
         </ul>
       </section>
+
+      
+
+
+
+
+
+
+
+
+      <section class="gn-section" id="subword" aria-labelledby="subword-heading">
+        <h2 id="subword-heading">BPE (Byte Pair Encoding) </h2>
+        <p><strong>Simple Definition :</strong> BPE is a tokenization algorithm that breaks text into subword units so that models can efficiently handle
+        </p>
+        
+          <ul>
+            <li>Rare words</li>
+            <li>Unknown words</li>
+            <li>Large vocabularies</li>
+          </ul>
+
+        <p>👉 Instead of storing full words, it builds words from smaller chunks.</p>
+        <h3></h3>
+        <p><strong>Why BPE Exists (Problem It Solves)</strong></p>
+        <div style="margin-left: 20px;">
+        <p>Before BPE : </p>
+          <ul>
+              <li>Huge vocabularies (e.g., 100,000+ words) make model training slow and memory-intensive.</li>
+              <li>Most words only appear a few times → wasting space on rare words.</li>
+              <li>Models can’t handle rare words or typos → performance suffers.</li>
+              <li>Unknown words (OOV problem)</li>
+          </ul>
+        </div>
+      
+
+        <h3>Core Idea of BPE</h3>
+        <p>Starts with Each character = token</p>
+        <ul>
+          <li>More complex to implement</li>
+          <li>Tokens may not always be human-readable</li>
+        </ul>
+
+        <h3>When it shines</h3>
+        <ul>
+          <li>Modern NLP and GenAI models (e.g., Transformers)</li>
+          <li>Large-scale multilingual datasets</li>
+        </ul>
+      </section>
+
+
+
 
     </main>
 
