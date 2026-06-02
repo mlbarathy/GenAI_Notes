@@ -364,7 +364,7 @@
           </tbody>
         </table>
 
-        <h3>5.1. Background (Why Transformers?) ; 👉 Transformer = “Every word attends to every other word using attention instead of recurrence.”</h3>
+        <h3>Background (Why Transformers?) ; 👉 Transformer = “Every word attends to every other word using attention instead of recurrence.”</h3>
         <p>Before Transformers, most NLP systems used:</p>
         <ul>
           <li>RNN / LSTM → process tokens sequentially (slow, hard to parallelize)</li>
@@ -379,7 +379,7 @@
         <p>Key Idea of Transformer:</p>
         <p>👉 Replace recurrence entirely with attention mechanism&#x2028;👉 Enable full parallel processing of sequences</p>
 
-        <h3>5.2. Model Architecture Overview</h3>
+        <h3>1. Model Architecture Overview</h3>
         <h3>Transformer Architecture</h3>
         <img class="transformer-hero-img" src="../assets/images/transformers.png" alt="Transformer Architecture Diagram" loading="lazy">
 		<p>Left architecture is the "Encoder" and the right is the "Decoder":</p>
@@ -400,7 +400,7 @@
         <h3>2.1 Input Embeddings</h3>
         <ul>
           <li>Input sentence → tokenized into words/subwords</li>
-          <li>Each token → converted into vector of size d_model</li>
+          <li>Each token → converted into vector of size d_model : Here the dim is 512</li>
         </ul>
         <p>👉 Output: Input Matrix: (sequence_length × d_model)</p>
         <ul>
@@ -424,7 +424,7 @@
         </ul>
 
         <h3>5.3. Encoder Architecture</h3>
-		<p><strong>Encoder:</strong> The encoder takes the input sequence and processes it through multiple layers of self-attention and feed-forward networks. It captures the contextual information of each word based on the entire sequence.</p>
+		<p><strong>Encoder:</strong> The encoder takes the input sequence and processes it through multiple layers of self-attention and feed-forward networks. It captures the contextual information of each word based on the entire sequence and here it is 6 layers</p>
         <p>Each encoder layer has:</p>
         <ol>
           <li>Self-Attention</li>
@@ -488,7 +488,7 @@
 		<p>Multi-head attention in the encoder block: plays a crucial role in capturing different types of information and learning diverse relationships between words. It allows the model to attend to different parts of the input sequence simultaneously and learn multiple representations of the same input.</p>
 
         <p>Instead of one attention:</p>
-        <p>👉 Use h parallel attention heads</p>
+        <p>👉 Use h parallel attention heads - Here it is 8 layers</p>
         <p>Each head learns different patterns:</p>
         <ul>
           <li>Syntax</li>

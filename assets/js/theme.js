@@ -47,7 +47,7 @@
       }
       var bid = sid + "-panel";
       toggle.setAttribute("aria-controls", bid);
-      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-expanded", "false");
 
       var body = document.createElement("div");
       body.className = "gn-section__body";
@@ -68,7 +68,7 @@
         section.classList.toggle("gn-section--collapsed", !exp);
       }
 
-      setExpanded(true);
+      setExpanded(false);
 
       toggle.addEventListener("click", function () {
         setExpanded(section.classList.contains("gn-section--collapsed"));

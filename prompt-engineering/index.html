@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Prompt Engineering: fundamentals, evolution, components, and best practices.">
+  <title>Prompt Engineering · GenAI Notes</title>
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+</head>
+
+<body>
+  <div class="gn-site">
+    <header class="gn-header">
+      <div class="gn-header__inner">
+        <a class="gn-logo" href="../">
+          <span class="gn-logo__mark" aria-hidden="true">G</span>
+          GenAI Notes
+        </a>
+        <div class="gn-header__actions">
+          <nav class="gn-nav" aria-label="Site">
+            <a href="../">Home</a>
+            <div class="gn-dropdown">
+              <button class="gn-dropdown__btn" type="button">Topics ▾</button>
+              <div class="gn-dropdown__menu">
+                <a href="../text-vectorization/">Text vectorization</a>
+                <a href="../transformers/">Transformers</a>
+                <a href="../foremost/">Foremost</a>
+                <a href="../tokenization/">Tokenization</a>
+                <a href="../sampling-methods/" aria-current="page">Sampling Methods</a>
+                <a href="./" aria-current="page">Prompt Engineering</a>
+              </div>
+            </div>
+          </nav>
+          <button type="button" class="gn-theme" id="gn-theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+      </div>
+    </header>
+    <main class="gn-main" id="main">
+      <a class="gn-back" href="../">← Back to home</a>
+      <h1 class="gn-page-title">Prompt Engineering</h1>
+      <p class="gn-page-sub">Comprehensive guide covering fundamentals, evolution, components, and best practices.</p>
+      <nav class="gn-toc" aria-label="On this page">
+        <a href="#fundamentals">Fundamentals</a>
+        <a href="#evolution">Evolution</a>
+        <a href="#role">Role of Prompts</a>
+        <a href="#components">Components</a>
+        <a href="#core-components">Core Prompt Components</a>
+        <a href="#advanced-techniques">Advanced Techniques</a>
+        <a href="#hyperparameters">Hyperparameters</a>
+        <a href="#tuning-evaluation">Tuning & Evaluation</a>
+      </nav>
+
+      <!-- Placeholder Sections -->
+      <section class="gn-section" id="fundamentals">
+        <h2>🔹 Fundamentals of Prompt Engineering</h2>
+        <p>Prompt Engineering is the process of designing, structuring, and optimizing inputs (prompts) given to Large
+          Language Models (LLMs) to obtain accurate, consistent, useful, and controllable outputs.</p>
+        <p>Traditional Programming : Input → Logic → Output<br>LLM Programming : Prompt → Model Reasoning → Output</p>
+        <h3><strong>Sample Prompt</h3></strong>
+        <strong>
+          <pre class="gn-pre">
+          You are a senior business analyst.
+
+          Summarize the document.
+
+          Requirements:
+          1.  Maximum 200 words
+          2.  Include risks
+          3.  Include recommendations
+          4.  Return markdown table
+</pre>
+        </strong>
+        <p></p>
+        <p>Output becomes:</p>
+        <ul>
+          <li>Consistent</li>
+          <li>Structured</li>
+          <li>Actionable</li>
+        </ul>
+      </section>
+      <section class="gn-section" id="evolution">
+        <h2>🔹 Evolution of Prompt Engineering</h2>
+        <p><strong>Simple Prompting :</strong> What is Python?<br>↓<br><strong>Instruction Prompting :</strong> Explain
+          Python as if teaching a beginner.<br>↓<br><strong>Few-Shot Prompting : </strong>With Some
+          Examples<br>↓<br><strong>Chain-of-Thought : </strong>Think step‑by‑step multi‑step reasoning
+          performance.<br>↓<br><strong>Agentic Prompting :</strong> Search information → Analyze results → Generate
+          report<br>↓<br><strong>AI Agent Workflows (Current) </strong> : Prompt → Tool Selection → Search → Reasoning →
+          Memory → Final Response</p>
+        <h3>What is Chain-of-Thought?</h3>
+        <p>Chain-of-Thought prompting is a technique where the model is encouraged to solve a problem step by step
+          instead of producing a direct answer.</p>
+        <strong>
+          <pre class="gn-pre">User Query
+↓
+LLM
+↓
+Step 1: Decompose problem
+↓
+Step 2: Intermediate reasoning
+↓
+Step 3: Final answer synthesis</pre>
+        </strong>
+        <p></p>
+        <strong>
+          <p>Modern AI systems combine:</p>
+        </strong>
+        <ul>
+          <li>Prompting</li>
+          <li>RAG</li>
+          <li>Tools</li>
+          <li>Memory</li>
+          <li>Agents</li>
+        </ul>
+      </section>
+      <section class="gn-section" id="role">
+        <h2>🔹 Role of Prompts in LLMs</h2>
+        <p>LLMs predict the next token.<br>Ex: Prompt – The capital of France is<br>Model predicts: France</p>
+        <strong>
+          <pre class="gn-pre">Prompt
+↓
+Tokenization
+↓
+Attention
+↓
+Probability Distribution
+↓
+Sampling
+↓
+Output</pre>
+        </strong>
+        <p>
+
+        </p>
+        <p>Prompt Engineering influences:</p>
+        <ul>
+          <li>Attention allocation</li>
+          <li>Context understanding</li>
+          <li>Output format</li>
+          <li>Reasoning quality</li>
+        </ul>
+      </section>
+      <section class="gn-section" id="components">
+        <h2>🔹 Prompt Components</h2>
+        <p>Prompt components typically include:</p>
+        <ul>
+          <li><strong>Role:</strong> “You are a senior data engineer”</li>
+          <li><strong>Task:</strong> Review this PySpark code.</li>
+          <li><strong>Context:</strong> The code runs on AWS EMR.</li>
+          <li><strong>Constraints:</strong> Focus only on performance issues.</li>
+          <li><strong>Output Format:</strong> Return JSON.</li>
+        </ul>
+        <h3>Best Practices of Prompt Engineering</h3>
+        <ul>
+          <li>Be Specific</li>
+          <li>Define Role</li>
+          <li>Define Output Format</li>
+          <li>Add Constraints</li>
+          <li>Use Delimiters</li>
+          <li>Provide Examples</li>
+        </ul>
+      </section>
+      <section class="gn-section" id="core-components">
+        <h2>🔹 Core Prompt Components</h2>
+        <p><strong> Types of Context</strong></p>
+        <ul>
+          <li><strong>Business Context</strong></li>
+          <li><strong>Technical Context</strong></li>
+          <li><strong>User Context</strong></li>
+          <li><strong>Historical Context</strong></li>
+          <li><strong>Data Context</strong></li>
+        </ul>
+
+        <p><strong>Constraints</strong></p>
+        <p>What the model should and should not do; constraints act like guardrails.</p>
+        <ul>
+          <li>Maximum 200 words</li>
+          <li>Return JSON only</li>
+          <li>Do not make assumptions</li>
+        </ul>
+
+        <p><strong>Types of Constraints</strong></p>
+        <ul>
+          <li>Length Constraints</li>
+          <li>Format Constraints</li>
+          <li>Scope Constraints</li>
+          <li>Style Constraints</li>
+          <li>Safety Constraints</li>
+        </ul>
+
+        <p><strong>Relationship Between Instruction, Context, and Constraints</strong></p>
+        <p><strong>Instruction:</strong> Generate Spark optimization recommendations.</p>
+        <p><strong>Context:</strong> Job processes 20 TB daily on EMR.</p>
+        <p><strong>Constraints:</strong> Focus only on shuffle reduction. Return top 5 recommendations.</p>
+
+        <h3>Prompt Template</h3>
+        <p><strong>Role:</strong> [Who should the model act as?]</p>
+        <p><strong>Instruction:</strong> [What task should be performed?]</p>
+        <p><strong>Context:</strong> [Relevant information]</p>
+        <p><strong>Constraints:</strong> [Rules and limitations]</p>
+        <p><strong>Output Format:</strong> [Expected structure]</p>
+
+        <p>Example:</p>
+        <strong>
+          <pre class="gn-pre">Act as a Principal Data Architect — Role
+Review this Athena SQL query. — Task / Instruction
+
+Context:
+  Table size = 15 billion rows
+  Partition columns: year, month, day
+
+Constraints:
+  1. Focus on performance.
+  2. Focus on partition pruning.
+  3. Ignore formatting.
+  4. Return:
+     - Issue
+     - Impact
+     - Recommendation</pre>
+        </strong>
+
+        <h3>Delimiters</h3>
+        <p>Delimiters are symbols, tags, or markers used to clearly separate different parts of a prompt.</p>
+        <ul>
+          <li>Where instructions start</li>
+          <li>Where instructions end</li>
+          <li>Where context begins</li>
+          <li>Where user data exists</li>
+          <li>What should be analyzed</li>
+        </ul>
+        <p>Without delimiters the core prompt components blend together, leading to hallucinations. Proper delimiters
+          improve context handling.</p>
+
+        <h3>The Persona Pattern</h3>
+        <p>Persona Prompting means instructing the model to adopt a specific role, identity, expertise level, or
+          perspective before performing a task.</p>
+        <p>Enterprise AI systems use personas to:</p>
+        <ul>
+          <li>Control expertise</li>
+          <li>Control reasoning style</li>
+          <li>Control vocabulary</li>
+          <li>Control output quality</li>
+          <li>Control decision‑making behavior</li>
+        </ul>
+        <p><strong>Types of Personas:</strong> Expert Persona, Experience‑Level Persona, Audience Persona, Behavioral
+          Persona, Multi‑Persona Prompting, Dynamic Personas.</p>
+      </section>
+      <section class="gn-section" id="advanced-techniques">
+        <h2>🔹 Advanced Prompting Techniques</h2>
+        <h3>Tree-of-Thought (ToT) Prompting</h3>
+        <p>Tree‑of‑Thought is a technique where the model explores multiple reasoning paths (branches) before selecting
+          the best solution, enabling richer problem‑solving.</p>
+        <h3>Skeleton-of-Thought (SoT) Prompting</h3>
+        <p>Skeleton‑of‑Thought first generates an outline (the “skeleton”) of the answer and then expands each section,
+          improving structure and completeness.</p>
+        <h3>Program-of-Thought Prompting</h3>
+        <p>Program‑of‑Thought converts the reasoning process into executable logical steps or code, allowing the model
+          to produce programmatic solutions.</p>
+      </section>
+      <section class="gn-section" id="hyperparameters">
+        <h2>🔹 Prompt Hyperparameters</h2>
+        <p>Prompt hyperparameters are configuration values that influence how a language model generates tokens.</p>
+        <ul>
+          <li><strong>Temperature</strong> – Controls creativity by scaling the probability distribution. Higher values
+            increase randomness.</li>
+          <li><strong>Top‑P (nucleus sampling)</strong> – Limits selection to the smallest set of tokens whose
+            cumulative probability exceeds P.</li>
+          <li><strong>Top‑K</strong> – Restricts token choices to the K most likely candidates.</li>
+          <li><strong>Max Tokens</strong> – Caps the maximum number of tokens the model may produce.</li>
+          <li><strong>Stop Sequences</strong> – Specifies strings that, when generated, cause the model to stop (e.g., a
+            semicolon for SQL).</li>
+          <li><strong>Presence Penalty</strong> – Encourages the model to introduce new topics or ideas.</li>
+          <li><strong>Frequency Penalty</strong> – Reduces repetition by lowering the probability of tokens that have
+            already appeared.</li>
+        </ul>
+        <h3>Hyperparameter Categories</h3>
+        <ul>
+          <li><strong>Creativity Controls</strong> – Temperature, Top‑P, Top‑K</li>
+          <li><strong>Length Controls</strong> – Max Tokens, Stop Sequences</li>
+          <li><strong>Diversity Controls</strong> – Presence Penalty, Frequency Penalty</li>
+        </ul>
+        <h3>Generation Flow</h3>
+        <strong>
+          <pre class="gn-pre">Model predicts probabilities
+↓
+Temperature reshapes distribution
+↓
+Top‑K / Top‑P filter candidates
+↓
+Final token is sampled</pre>
+        </strong>
+        <p></p>
+        <h3>Penalty Illustrations</h3>
+        <p><strong>Frequency Penalty</strong> – Reduces the likelihood of tokens that appear many times.</p>
+        <p><strong>Presence Penalty</strong> – Reduces the likelihood of tokens that have appeared at least once,
+          promoting topic diversity.</p>
+        <strong>
+          <pre class="gn-pre">
+No penalty          :  Cloud computing is scalable. Cloud computing is flexible. Cloud computing is cost‑effective.
+Frequency penalty   :  Cloud computing is scalable, flexible, and cost‑effective.
+Presence penalty    :  Cloud computing provides scalability, global accessibility, automation, and improved resilience.</pre>
+        </strong>
+      </section>
+      <section class="gn-section" id="tuning-evaluation">
+        <h2>🔹 Prompt Tuning & Evaluation</h2>
+        <p>Prompt parameter tuning is the process of finding optimal values for the hyperparameters.</p>
+        <p><strong>Why needed:</strong> LLMs are probabilistic systems, not deterministic programs.</p>
+        <p><strong>Prompt Engineering = Design + Parameters + Evaluation</strong></p>
+        <p><strong>Evaluation:</strong> If prompt tuning is engineering the system, then prompt evaluation is measuring
+          whether it actually works in the real world.</p>
+        <p>Prompt evaluation assesses the quality, correctness, and reliability of LLM outputs produced by a prompt +
+          parameter configuration.</p>
+      </section>
+    </main>
+    <footer class="gn-footer">
+      <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
+    </footer>
+  </div>
+  <script src="../assets/js/theme.js" defer></script>
+</body>
+
+</html>
