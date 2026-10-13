@@ -11,15 +11,25 @@
     .gn-doc.gn-section li { margin: 0 0 0.2rem; }
     .gn-doc p,
     .gn-doc li { white-space: pre-wrap; tab-size: 4; }
+    .gn-section.gn-doc h2 {
+      font-weight: 400;
+      font-size: 1.15rem;
+      margin: 0;
+    }
+    .gn-section.gn-doc h2.gn-doc-title {
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+    }
+    .gn-section.gn-doc h2.gn-doc-h {
+      font-size: 1.2rem;
+    }
     .gn-doc .gn-doc-title {
       font-size: 1.75rem;
-      font-weight: 800;
       letter-spacing: -0.02em;
       margin: 0.75rem 0 0.35rem;
     }
     .gn-doc .gn-doc-h {
       font-size: 1.2rem;
-      font-weight: 700;
       margin: 0.85rem 0 0.35rem;
     }
     .gn-doc b { font-weight: 700; }
@@ -65,242 +75,266 @@
     <main class="gn-main" id="main">
       <a class="gn-back" href="../">← Back to home</a>
       <h1 class="gn-page-title">RAG</h1>
-      <div class="gn-section gn-doc">
-        <p>Evaluation : </p>
-        <p>Recall@K</p>
-        <p>Precision@K</p>
-        <p>MRR</p>
-        <p>nDCG</p>
-        <p>Context Recall</p>
-        <p>Context Precision</p>
-        <p>Answer correctness</p>
-        <p>Faithfulness</p>
-        <p>Latency</p>
-        <p>Token consumption</p>
-        <p><br></p>
-        <p><br></p>
-        <p class="gn-doc-title">RAG : </p>
-        <p><br></p>
-        <p>Retrieval Augmented Generation (RAG) is a method that helps a Large Language Model (LLM) give better and more accurate answers by allowing it to <b>look up information from external data sources before answering</b>.</p>
-        <p><br></p>
-        <p class="gn-doc-h">How is RAG different from fine-tuning an LLM?</p>
-        <p>Fine-tuning means: You <b>retrain the model</b> on new data so it “learns” that information permanently. Fine-tuning means <b>changing the model itself</b> by training it on new examples.</p>
-        <p><br></p>
-        <p>RAG means: You <b>do not retrain the mode : </b>it means <b>keeping the model the same</b>, but giving it extra information at runtime.</p>
-        <p>You simply give it relevant information at the time of answering.</p>
-        <p><br></p>
-        <p>Fine-tuning:</p>
-        <ul><li>Expensive</li>
+            <section class="gn-section gn-doc" id="evaluation">
+        <h2>Evaluation : </h2>
+<p>Recall@K</p>
+<p>Precision@K</p>
+<p>MRR</p>
+<p>nDCG</p>
+<p>Context Recall</p>
+<p>Context Precision</p>
+<p>Answer correctness</p>
+<p>Faithfulness</p>
+<p>Latency</p>
+<p>Token consumption</p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="rag">
+        <h2 class="gn-doc-title">RAG : </h2>
+<p><br></p>
+<p>Retrieval Augmented Generation (RAG) is a method that helps a Large Language Model (LLM) give better and more accurate answers by allowing it to <b>look up information from external data sources before answering</b>.</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="how-is-rag-different-from-fine-tuning-an-llm">
+        <h2 class="gn-doc-h">How is RAG different from fine-tuning an LLM?</h2>
+<p>Fine-tuning means: You <b>retrain the model</b> on new data so it “learns” that information permanently. Fine-tuning means <b>changing the model itself</b> by training it on new examples.</p>
+<p><br></p>
+<p>RAG means: You <b>do not retrain the mode : </b>it means <b>keeping the model the same</b>, but giving it extra information at runtime.</p>
+<p>You simply give it relevant information at the time of answering.</p>
+<p><br></p>
+<p>Fine-tuning:</p>
+<ul><li>Expensive</li>
         <li>Time-consuming</li>
         <li>Requires retraining</li>
         <li>Hard to update frequently</li>
         <li>Information becomes part of the model<br>
         </li>
         </ul>
-        <p>RAG:</p>
-        <ul><li>Faster to implement</li>
+<p>RAG:</p>
+<ul><li>Faster to implement</li>
         <li>Easier to update (just update the database)</li>
         <li>No retraining required</li>
         <li>More flexible</li>
         <li>Information stays outside the model</li>
         </ul>
-        <p><br></p>
-        <p>RAG focuses on <b>knowledge access</b>, while fine-tuning focuses on <b>behavior and style</b>.</p>
-        <p><br></p>
-        <p>If the problem is about <b>knowledge access </b><b>→</b><b> use RAG</b></p>
-        <p>If the problem is about <b>behavior change </b><b>→</b><b> use fine-tuning</b></p>
-        <p><br></p>
-        <p>You should prefer RAG when:</p>
-        <p><br></p>
-        <p>• Your data changes frequently</p>
-        <p>• You need up-to-date information</p>
-        <p>• You are using private or company documents</p>
-        <p>• You want lower cost and faster implementation</p>
-        <p>• You need traceable answers (with sources)</p>
-        <p><br></p>
-        <p>For example:</p>
-        <ul><li>Customer support chatbot using internal knowledge base</li>
+<p><br></p>
+<p>RAG focuses on <b>knowledge access</b>, while fine-tuning focuses on <b>behavior and style</b>.</p>
+<p><br></p>
+<p>If the problem is about <b>knowledge access </b><b>→</b><b> use RAG</b></p>
+<p>If the problem is about <b>behavior change </b><b>→</b><b> use fine-tuning</b></p>
+<p><br></p>
+<p>You should prefer RAG when:</p>
+<p><br></p>
+<p>• Your data changes frequently</p>
+<p>• You need up-to-date information</p>
+<p>• You are using private or company documents</p>
+<p>• You want lower cost and faster implementation</p>
+<p>• You need traceable answers (with sources)</p>
+<p><br></p>
+<p>For example:</p>
+<ul><li>Customer support chatbot using internal knowledge base</li>
         <li>Legal document assistant</li>
         <li>Company HR policy bot</li>
         <li>Medical research assistant<br>
         </li>
         </ul>
-        <p>In all these cases, data updates often. Retraining every time would be expensive and slow.</p>
-        <p><br></p>
-        <p>Fine-tuning is better when:</p>
-        <ul><li>You want to change writing style or tone</li>
+<p>In all these cases, data updates often. Retraining every time would be expensive and slow.</p>
+<p><br></p>
+<p>Fine-tuning is better when:</p>
+<ul><li>You want to change writing style or tone</li>
         <li>You want domain-specific language behavior</li>
         <li>You want the model to follow a strict format</li>
         <li>You want behavior improvement, not just knowledge access</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>Why RAG Exists: The Problems with a Plain LLM :</b></p>
-        <p>Knowledge Cutoff</p>
-        <p>Hallucination : Generating fluent, plausible content that is unsupported or false.</p>
-        <p><br></p>
-        <p>RAG over a vector index is right for <i>slowly to moderately changing unstructured knowledge</i>. For real-time state, the "retrieval" step should be an API call</p>
-        <p><br></p>
-        <p><b>CITATION</b> : You cannot cite weights. Banking, healthcare, legal, and insurance all require traceability: "show me where it says that." RAG provides source IDs, page numbers, sections, and versions.</p>
-        <p>No Access Control in Weights - A model cannot know that user A may see the M&amp;A folder and user B may not. Anything in the weights is available to anyone who can prompt the model. RAG enforces authorization at retrieval time, so the LLM only ever sees documents the requesting user is allowed to see.</p>
-        <p><br></p>
-        <p><b>Context Injection and Grounded Generation</b></p>
-        <p><b>Context injection</b> means placing retrieved text into the prompt so it becomes part of the conditioning sequence. </p>
-        <p><b>Grounding</b> is the property that every factual claim in the output is supported by the provided evidence. <i>Injection is the mechanism; grounding is the contract.</i> Injection alone does not guarantee grounding, because the model can still ignore, misread, or supplement the context.</p>
-        <p><b>It has </b>Evidence (Relevant), Instruction ("Answer only from sources; say if not found"), Attribution (Cite source IDs per claim),Abstention (n explicit, acceptable "I don't know" path), Verification (Post-generation check: claims ⊆ evidence)</p>
-        <p><br></p>
-        <p>Product Quantization (PQ) Vs Scalar Quantization (SQ) </p>
-        <p><br></p>
-        <p>RAG : </p>
-        <p>"RAG, Retrieval-Augmented Generation, is a pattern where at inference time we retrieve evidence relevant to the user's question from an external knowledge store and inject it into the LLM's context, so the answer is grounded in, and attributable to, that evidence.</p>
-        <p>It exists because an LLM has two kinds of memory. Its weights are frozen at a training cutoff, lossy for long-tail facts, contain none of our private data, and can't enforce permissions. Its context window is precise but only lasts for one request. Models are much better at reading than remembering, so RAG's job is to find the right text and put it in front of the model.</p>
-        <p>That addresses four enterprise problems. Freshness: updating knowledge means re-indexing a document, not retraining. Private data: our documents stay in our store. Attribution: every claim can cite a source. And the one people often miss, access control: we filter by the user's permissions at retrieval time, so the model only ever sees what that user is allowed to see.</p>
-        <p><br></p>
-        <p><b>"What's the difference between faithfulness and correctness?"</b></p>
-        <p>Faithfulness compares the answer with the context; correctness compares it with the truth. A faithful answer built on an outdated source is still wrong.</p>
-        <p><br></p>
-        <p><b>1 . Metadata : </b></p>
-        <p>Chunking creates the searchable units; metadata tells the retrieval system what those units are, where they came from, who can access them, and when they are valid.</p>
-        <p>metadata is one of the things that makes retrieval <b>accurate, secure, filterable, and maintainable</b>.</p>
-        <p><b>1.1 : Metadata Enrichment : </b>Make every chunk <b>filterable, rankable, citable, and securable:</b></p>
-        <p><b>Source metadata : </b><code>doc_id</code>, title, URL, author, <code>created_at</code> / <code>modified_at</code>, source system:</p>
-        <p><b>Structural metadata : </b><code>heading_path</code> ("Policy &gt; Refunds &gt; 7.2 Disruption"), page, <code>chunk_index</code>, <code>parent_id</code></p>
-        <p><b>Security metadata : </b><code>tenant_id</code>, <code>acl_groups</code>, classification, data residency region</p>
-        <p><b>Lifecycle metadata : </b>version, <code>effective_from</code> / <code>effective_to</code>, status (active / superseded / deleted)</p>
-        <p><b>Semantic metadata : </b>language, <code>doc_type</code>, product, region, entities, keywords, summary, hypothetical questions</p>
-        <p><b>Common problems : </b>Inconsistent tags (<code>UAE</code> vs <code>AE</code> vs <code>United Arab Emirates</code>) causing silent filter misses; hallucinated LLM metadata; stale ACLs</p>
-        <p><br></p>
-        <p>Don't think of metadata as "extra information attached to a chunk." Think of it as the control plane for your RAG system — it enables retrieval filtering, security, freshness, provenance, governance, and operational debugging.</p>
-        <p><br></p>
-        <p><br></p>
-        <p><b>2 . CHUNKING : </b></p>
-        <p><br></p>
-        <p><br></p>
-        <p><b>2.1 Core Concepts :</b></p>
-        <p><br></p>
-        <ul><li><b>size</b></li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="why-rag-exists-the-problems-with-a-plain-llm">
+        <h2><b>Why RAG Exists: The Problems with a Plain LLM :</b></h2>
+<p>Knowledge Cutoff</p>
+<p>Hallucination : Generating fluent, plausible content that is unsupported or false.</p>
+<p><br></p>
+<p>RAG over a vector index is right for <i>slowly to moderately changing unstructured knowledge</i>. For real-time state, the "retrieval" step should be an API call</p>
+<p><br></p>
+<p><b>CITATION</b> : You cannot cite weights. Banking, healthcare, legal, and insurance all require traceability: "show me where it says that." RAG provides source IDs, page numbers, sections, and versions.</p>
+<p>No Access Control in Weights - A model cannot know that user A may see the M&amp;A folder and user B may not. Anything in the weights is available to anyone who can prompt the model. RAG enforces authorization at retrieval time, so the LLM only ever sees documents the requesting user is allowed to see.</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="context-injection-and-grounded-generation">
+        <h2><b>Context Injection and Grounded Generation</b></h2>
+<p><b>Context injection</b> means placing retrieved text into the prompt so it becomes part of the conditioning sequence. </p>
+<p><b>Grounding</b> is the property that every factual claim in the output is supported by the provided evidence. <i>Injection is the mechanism; grounding is the contract.</i> Injection alone does not guarantee grounding, because the model can still ignore, misread, or supplement the context.</p>
+<p><b>It has </b>Evidence (Relevant), Instruction ("Answer only from sources; say if not found"), Attribution (Cite source IDs per claim),Abstention (n explicit, acceptable "I don't know" path), Verification (Post-generation check: claims ⊆ evidence)</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="product-quantization-pq-vs-scalar-quantization-sq">
+        <h2>Product Quantization (PQ) Vs Scalar Quantization (SQ) </h2>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="rag-2">
+        <h2>RAG : </h2>
+<p>"RAG, Retrieval-Augmented Generation, is a pattern where at inference time we retrieve evidence relevant to the user's question from an external knowledge store and inject it into the LLM's context, so the answer is grounded in, and attributable to, that evidence.</p>
+<p>It exists because an LLM has two kinds of memory. Its weights are frozen at a training cutoff, lossy for long-tail facts, contain none of our private data, and can't enforce permissions. Its context window is precise but only lasts for one request. Models are much better at reading than remembering, so RAG's job is to find the right text and put it in front of the model.</p>
+<p>That addresses four enterprise problems. Freshness: updating knowledge means re-indexing a document, not retraining. Private data: our documents stay in our store. Attribution: every claim can cite a source. And the one people often miss, access control: we filter by the user's permissions at retrieval time, so the model only ever sees what that user is allowed to see.</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="faithfulness-and-correctness">
+        <h2><b>"What's the difference between faithfulness and correctness?"</b></h2>
+<p>Faithfulness compares the answer with the context; correctness compares it with the truth. A faithful answer built on an outdated source is still wrong.</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="1-metadata">
+        <h2><b>1 . Metadata : </b></h2>
+<p>Chunking creates the searchable units; metadata tells the retrieval system what those units are, where they came from, who can access them, and when they are valid.</p>
+<p>metadata is one of the things that makes retrieval <b>accurate, secure, filterable, and maintainable</b>.</p>
+<p><b>1.1 : Metadata Enrichment : </b>Make every chunk <b>filterable, rankable, citable, and securable:</b></p>
+<p><b>Source metadata : </b><code>doc_id</code>, title, URL, author, <code>created_at</code> / <code>modified_at</code>, source system:</p>
+<p><b>Structural metadata : </b><code>heading_path</code> ("Policy &gt; Refunds &gt; 7.2 Disruption"), page, <code>chunk_index</code>, <code>parent_id</code></p>
+<p><b>Security metadata : </b><code>tenant_id</code>, <code>acl_groups</code>, classification, data residency region</p>
+<p><b>Lifecycle metadata : </b>version, <code>effective_from</code> / <code>effective_to</code>, status (active / superseded / deleted)</p>
+<p><b>Semantic metadata : </b>language, <code>doc_type</code>, product, region, entities, keywords, summary, hypothetical questions</p>
+<p><b>Common problems : </b>Inconsistent tags (<code>UAE</code> vs <code>AE</code> vs <code>United Arab Emirates</code>) causing silent filter misses; hallucinated LLM metadata; stale ACLs</p>
+<p><br></p>
+<p>Don't think of metadata as "extra information attached to a chunk." Think of it as the control plane for your RAG system — it enables retrieval filtering, security, freshness, provenance, governance, and operational debugging.</p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="2-chunking">
+        <h2><b>2 . CHUNKING : </b></h2>
+<p><br></p>
+<p><br></p>
+<p><b>2.1 Core Concepts :</b></p>
+<p><br></p>
+<ul><li><b>size</b></li>
         <li><b>overlap</b></li>
         <li><b>Semantic boundaries.: </b>Natural units of meaning: sentence, paragraph, section, clause, function. Cutting <i>between</i> them preserves meaning; cutting <i>through</i> them destroys it.</li>
         <li><b>Context preservation.</b> Each chunk must be <b>interpretable on its own</b>.</li>
         </ul>
-        <p><br></p>
-        <p><b>2.2 Chunking Strategies :</b> </p>
-        <p><br></p>
-        <ul><li><b>Fixed-Size + overlap</b></li>
+<p><br></p>
+<p><b>2.2 Chunking Strategies :</b> </p>
+<p><br></p>
+<ul><li><b>Fixed-Size + overlap</b></li>
         <li><b>Sentence-Based Chunking</b></li>
         <li><b>Paragraph-Based Chunki ng</b></li>
         </ul>
-        <ul><li><b>Recursive Chunking :  </b></li>
+<ul><li><b>Recursive Chunking :  </b></li>
         </ul>
-        <ul><ul class="dash"><li><b>How it works.</b> Try the "largest" separator first (<code>\n\n</code>). If a resulting piece is still too big, split <i>that piece</i> with the next separator (<code>\n</code>, then <code>. </code>, then , and finally individual characters). Then greedily merge the small pieces back up to the size limit.</li>
+<ul><ul class="dash"><li><b>How it works.</b> Try the "largest" separator first (<code>\n\n</code>). If a resulting piece is still too big, split <i>that piece</i> with the next separator (<code>\n</code>, then <code>. </code>, then , and finally individual characters). Then greedily merge the small pieces back up to the size limit.</li>
         <li><b>Why it works:</b> it prefers the most meaningful boundary available and only falls back to weaker boundaries when forced to.</li>
         </ul>
         </ul>
-        <p><br></p>
-        <ul><li><b>Semantic Chunking : </b>Embed each sentence, measure the similarity between consecutive sentences, and cut where the topic "jumps." The most common approach uses embedding distance thresholds, where you calculate the similarity between consecutive sentences and split the text when that similarity drops below a specific target.</li>
+<p><br></p>
+<ul><li><b>Semantic Chunking : </b>Embed each sentence, measure the similarity between consecutive sentences, and cut where the topic "jumps." The most common approach uses embedding distance thresholds, where you calculate the similarity between consecutive sentences and split the text when that similarity drops below a specific target.</li>
         </ul>
-        <p><b>One-line definition for interviews</b><b> : </b>Semantic chunking is a RAG preprocessing technique that uses semantic similarity between neighboring text segments to identify meaningful topic boundaries, producing coherent chunks that improve the quality of retrieval and downstream LLM responses.</p>
-        <p><br></p>
-        <ul><li><b>Parent-Child Chunking (Small-to-Big) : Parent-Child Chunking</b> is a RAG retrieval strategy where a document is divided into <b>small child chunks for precise retrieval</b>, while each child chunk belongs to a <b>larger parent chunk that contains broader context</b>.</li>
+<p><b>One-line definition for interviews</b><b> : </b>Semantic chunking is a RAG preprocessing technique that uses semantic similarity between neighboring text segments to identify meaningful topic boundaries, producing coherent chunks that improve the quality of retrieval and downstream LLM responses.</p>
+<p><br></p>
+<ul><li><b>Parent-Child Chunking (Small-to-Big) : Parent-Child Chunking</b> is a RAG retrieval strategy where a document is divided into <b>small child chunks for precise retrieval</b>, while each child chunk belongs to a <b>larger parent chunk that contains broader context</b>.</li>
         </ul>
-        <p>This solves a common RAG problem: <b>small chunks retrieve precisely but may lack context; large chunks provide context but can hurt retrieval precision.</b></p>
-        <p>Parent-child chunking separates retrieval granularity from generation context by indexing small child chunks for precise semantic search while using their larger parent chunks to provide sufficient context to the LLM.</p>
-        <p><br></p>
-        <p class="gn-doc-h"><b>Interview scenario</b></p>
-        <p><b>Interviewer:</b></p>
-        <p>"You have a 500-page hotel policy document. Some policies are very detailed. How would you chunk it?"</p>
-        <p>A strong answer:</p>
-        <p>"I wouldn't immediately choose a fixed token size. First I'd preserve the document hierarchy—document, section, subsection and paragraph. I'd create parent chunks around coherent sections and then divide those parents into smaller child chunks based on semantic or structural boundaries. I'd embed the child chunks because they provide more precise retrieval representations, while maintaining a parent ID for each child. At query time, I'd retrieve the top-K child chunks, expand their parent IDs, deduplicate the parents, and optionally rerank the parent candidates. I'd then construct the final context within a token budget and send that to the LLM. Finally, I'd compare this against recursive or semantic chunking using retrieval and answer-quality metrics."</p>
-        <p><br></p>
-        <ul><li><b>Proposition chunking</b> (the "Dense X Retrieval" line of work) uses an LLM to rewrite text into atomic, self-contained factual statements ("The flight-disruption exception excludes corporate-account bookings."). This gives very high precision, but ingestion is expensive.</li>
+<p>This solves a common RAG problem: <b>small chunks retrieve precisely but may lack context; large chunks provide context but can hurt retrieval precision.</b></p>
+<p>Parent-child chunking separates retrieval granularity from generation context by indexing small child chunks for precise semantic search while using their larger parent chunks to provide sufficient context to the LLM.</p>
+<p><br></p>
+<p class="gn-doc-h"><b>Interview scenario</b></p>
+<p><b>Interviewer:</b></p>
+<p>"You have a 500-page hotel policy document. Some policies are very detailed. How would you chunk it?"</p>
+<p>A strong answer:</p>
+<p>"I wouldn't immediately choose a fixed token size. First I'd preserve the document hierarchy—document, section, subsection and paragraph. I'd create parent chunks around coherent sections and then divide those parents into smaller child chunks based on semantic or structural boundaries. I'd embed the child chunks because they provide more precise retrieval representations, while maintaining a parent ID for each child. At query time, I'd retrieve the top-K child chunks, expand their parent IDs, deduplicate the parents, and optionally rerank the parent candidates. I'd then construct the final context within a token budget and send that to the LLM. Finally, I'd compare this against recursive or semantic chunking using retrieval and answer-quality metrics."</p>
+<p><br></p>
+<ul><li><b>Proposition chunking</b> (the "Dense X Retrieval" line of work) uses an LLM to rewrite text into atomic, self-contained factual statements ("The flight-disruption exception excludes corporate-account bookings."). This gives very high precision, but ingestion is expensive.</li>
         </ul>
-        <p><br></p>
-        <p><b>2.3 What Goes Wrong: Size and Overlap Failure Modes : </b></p>
-        <p><br></p>
-        <ul><li><b>Chunk too small : </b>The chunk contains too little context to represent a complete idea , The individual chunks don't contain the complete rule.Important information split across chunks</li>
+<p><br></p>
+<p><b>2.3 What Goes Wrong: Size and Overlap Failure Modes : </b></p>
+<p><br></p>
+<ul><li><b>Chunk too small : </b>The chunk contains too little context to represent a complete idea , The individual chunks don't contain the complete rule.Important information split across chunks</li>
         <li><b>Chunk too Large : </b>A chunk contains too many unrelated concepts,contains lots of irrelevant information , Higher inference cost , More latency , Context-window pressure &amp; Possible distraction of the LLM </li>
         <li><b>Overlap too large : </b>The same content is repeated across many neighboring chunks, effectively retrieve <b>one piece of information many times</b>.</li>
         <li><b>Overlap too small : </b>Important information at a chunk boundary can be separated.</li>
         </ul>
-        <p><br></p>
-        <p>Chunking exists for three main reasons: embedding models have input limits, one vector must represent the entire chunk, and the LLM has a token budget. The second reason is the most important. If a chunk mixes several topics, its vector lands between them and matches none strongly, so large chunks cause retrieval misses. Small chunks match precisely but lose context: a sentence like 'this exception does not apply to corporate bookings' is useless without knowing which exception.</p>
-        <ul><li>So chunk size trades match precision against answer completeness. </li>
+<p><br></p>
+<p>Chunking exists for three main reasons: embedding models have input limits, one vector must represent the entire chunk, and the LLM has a token budget. The second reason is the most important. If a chunk mixes several topics, its vector lands between them and matches none strongly, so large chunks cause retrieval misses. Small chunks match precisely but lose context: a sentence like 'this exception does not apply to corporate bookings' is useless without knowing which exception.</p>
+<ul><li>So chunk size trades match precision against answer completeness. </li>
         <li>Overlap protects facts that straddle boundaries: with overlap O, any span up to O+1 tokens is guaranteed intact in some chunk, at a storage cost of S over S minus O, which is why 10–20% overlap is a sensible default. </li>
         <li>Too much overlap multiplies cost and fills top-K with near-duplicates.</li>
         </ul>
-        <p><br></p>
-        <ul class="square"><li>My default is structure-aware chunking: split on the document's own structure (headings, clauses, slides, functions), recursively split oversized sections, and prefix each chunk with its document title and heading path so it stands alone. </li>
+<p><br></p>
+<ul class="square"><li>My default is structure-aware chunking: split on the document's own structure (headings, clauses, slides, functions), recursively split oversized sections, and prefix each chunk with its document title and heading path so it stands alone. </li>
         <li>For policy and manual content, I use parent-child: embed small children of around 200 tokens for precise matching, but return the parent section to the LLM. I choose per document type: clause-level for legal with cross-reference handling, one Q&amp;A pair per chunk for FAQs, one product per chunk with structured attributes kept as filters for catalogs, AST-based for code, and tables with repeated headers, units, and periods for financial reports.</li>
         <li>I never pick a size by convention. I run an experiment on a labeled eval set, compare configurations at an equal context-token budget rather than equal K, since bigger chunks otherwise get unfair extra context, and segment the results by query type. Semantic chunking is something I test against a recursive baseline rather than assume, since its gains are often inconsistent relative to its ingestion cost."</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>3. EMBEDDINGS : </b></p>
-        <p><br></p>
-        <p>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. </p>
-        <p>Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling (mean, CLS, or last-token) produces one vector, usually L2-normalized.</p>
-        <p><br></p>
-        <p><b>Similarity Metrics :</b></p>
-        <p><br></p>
-        <p>Dot product:		 s = a · b                         	range (−∞, ∞), sensitive to magnitude</p>
-        <p>Cosine:		 s = (a · b) / (‖a‖ ‖b‖)            	range [−1, 1], angle only</p>
-        <p>Euclidean (L2): 	 s = ‖a − b‖ = √(Σ (aᵢ − bᵢ)²)     range [0, ∞), smaller = more similar</p>
-        <p><br></p>
-        <p><br></p>
-        <p>On normalized vectors, <b>dot product, cosine, and Euclidean distance produce identical rankings</b>. Dot product is the cheapest to compute, which is why systems normalize once at write time and then use inner product.</p>
-        <p><br></p>
-        <p><br></p>
-        <p><b>4 -</b> <b>Embedding :</b></p>
-        <ol><li><i>Simple:</i> embeddings are coordinates on a map of meaning.</li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="3-embeddings">
+        <h2><b>3. EMBEDDINGS : </b></h2>
+<p><br></p>
+<p>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. </p>
+<p>Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling (mean, CLS, or last-token) produces one vector, usually L2-normalized.</p>
+<p><br></p>
+<p><b>Similarity Metrics :</b></p>
+<p><br></p>
+<p>Dot product:		 s = a · b                         	range (−∞, ∞), sensitive to magnitude</p>
+<p>Cosine:		 s = (a · b) / (‖a‖ ‖b‖)            	range [−1, 1], angle only</p>
+<p>Euclidean (L2): 	 s = ‖a − b‖ = √(Σ (aᵢ − bᵢ)²)     range [0, ∞), smaller = more similar</p>
+<p><br></p>
+<p><br></p>
+<p>On normalized vectors, <b>dot product, cosine, and Euclidean distance produce identical rankings</b>. Dot product is the cheapest to compute, which is why systems normalize once at write time and then use inner product.</p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="4-embedding">
+        <h2><b>4 -</b> <b>Embedding :</b></h2>
+<ol><li><i>Simple:</i> embeddings are coordinates on a map of meaning.</li>
         <li><i>Technical:</i> a transformer encoder produces contextual token vectors, which are pooled and normalized into one vector, trained contrastively so related pairs are close.</li>
         <li><i>Production:</i> a versioned embedding service guarantees identical treatment on both paths.</li>
         <li><i>Architecture:</i> model choice is a long-term commitment, because switching means re-embedding the corpus, so I evaluate on my own data and plan blue/green migrations.</li>
         </ol>
-        <p><br></p>
-        <p>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling (mean, CLS, or last-token) produces one vector, usually L2-normalized.</p>
-        <p><br></p>
-        <p><b>Model Selection :</b></p>
-        <ul><li class="mono">Quality on : What is Recall@K on your golden set? Public leaderboards such as MTEB are a shortlist, not a decision; domain shift and benchmark contamination make public scores unreliable for your corpus</li>
+<p><br></p>
+<p>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling (mean, CLS, or last-token) produces one vector, usually L2-normalized.</p>
+<p><br></p>
+<p><b>Model Selection :</b></p>
+<ul><li class="mono">Quality on : What is Recall@K on your golden set? Public leaderboards such as MTEB are a shortlist, not a decision; domain shift and benchmark contamination make public scores unreliable for your corpus</li>
         <li class="mono">Max input length : Does it cover your chunk size without truncation?</li>
         <li class="mono">Query latency : API round-trip vs self-hosted CPU or GPU inference</li>
         <li>Cost</li>
         <li class="mono">Domain : Legal, medical, code, finance: general vs specialized</li>
         </ul>
-        <p><br></p>
-        <p><b>Embedding Mismatch Problems :</b></p>
-        <p>Different model for query vs corpus :</p>
-        <p>Silent version change :</p>
-        <p>Missing/wrong prefixes : </p>
-        <p><br></p>
-        <ul><li>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling .</li>
+<p><br></p>
+<p><b>Embedding Mismatch Problems :</b></p>
+<p>Different model for query vs corpus :</p>
+<p>Silent version change :</p>
+<p>Missing/wrong prefixes : </p>
+<p><br></p>
+<ul><li>An embedding is a dense vector representation of text where geometric closeness approximates semantic relatedness. Mechanically, the text is tokenized, each token is looked up in an embedding matrix, a transformer encoder makes the token vectors context-aware, and pooling .</li>
         <li>Closeness means something because the model is trained contrastively ,So similarity reflects what the training data paired together, not logical equivalence. That's why embeddings are weak at negation, exact IDs, and numbers, and why I pair them with BM25 and a reranker.</li>
         <li>For metrics: on normalized vectors, cosine, dot product, and Euclidean give identical rankings, because squared L2 distance equals 2 minus 2 cosine. So I normalize at write time and use inner product. Absolute scores aren't portable across models because embedding spaces are anisotropic, so thresholds must be calibrated per model.</li>
         <li>For model selection, I start from public leaderboards but decide on Recall@K on a golden set from my own corpus, then weigh input length, dimensions and storage (Matryoshka models allow truncation), latency, languages measured per language pair, data residency, and lock-in, since switching models means re-embedding everything. For jargon-heavy domains, I fine-tune with contrastive loss on query–passage pairs from logs or synthetic queries with hard negatives, or use a query-side adapter to avoid re-embedding.</li>
         <li>The biggest production risk is mismatch: a different model, version, prefix, or preprocessing between ingestion and query produces garbage with no error. I prevent it with a single embedding service that owns all of that and stamps the model ID on every vector.</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>5 — VECTOR DATABASES</b></p>
-        <p>A <b>vector index</b> is an algorithm or data structure for nearest-neighbor search, found in libraries such as FAISS, hnswlib .</p>
-        <p><br></p>
-        <p><b>Index Types :</b></p>
-        <p><b>Flat Index : </b>Stores raw vectors and scans all of them. There are no parameters, it is exact, and it is linear in cost. FAISS <code>IndexFlatIP</code> / <code>IndexFlatL2</code> : Search time : O(N·d) per query.</p>
-        <p><b>HNSW (Hierarchical Navigable Small World) : </b>graph-based <b>Approximate Nearest Neighbor (ANN)</b> : HNSW cuts search times down to (O(log N))</p>
-        <p>Think of it as a <b>multi-level highway system for vectors</b>.</p>
-        <p><br></p>
-        <p> HNSW GRAPH : </p>
-        <p>                  LEVEL 2</p>
-        <p>          A ───────── H</p>
-        <p>          	     ↓            ↓</p>
-        <p><br></p>
-        <p>                 LEVEL 1</p>
-        <p>       A ─── D ─── H ─── K</p>
-        <p>                ↓       ↓</p>
-        <p><br></p>
-        <p>                LEVEL 0</p>
-        <p>       A-B-C-D-E-F-G-H-I-J-K-L</p>
-        <p><br></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="5-vector-databases">
+        <h2><b>5 — VECTOR DATABASES</b></h2>
+<p>A <b>vector index</b> is an algorithm or data structure for nearest-neighbor search, found in libraries such as FAISS, hnswlib .</p>
+<p><br></p>
+<p><b>Index Types :</b></p>
+<p><b>Flat Index : </b>Stores raw vectors and scans all of them. There are no parameters, it is exact, and it is linear in cost. FAISS <code>IndexFlatIP</code> / <code>IndexFlatL2</code> : Search time : O(N·d) per query.</p>
+<p><b>HNSW (Hierarchical Navigable Small World) : </b>graph-based <b>Approximate Nearest Neighbor (ANN)</b> : HNSW cuts search times down to (O(log N))</p>
+<p>Think of it as a <b>multi-level highway system for vectors</b>.</p>
+<p><br></p>
+<p> HNSW GRAPH : </p>
+<p>                  LEVEL 2</p>
+<p>          A ───────── H</p>
+<p>          	     ↓            ↓</p>
+<p><br></p>
+<p>                 LEVEL 1</p>
+<p>       A ─── D ─── H ─── K</p>
+<p>                ↓       ↓</p>
+<p><br></p>
+<p>                LEVEL 0</p>
+<p>       A-B-C-D-E-F-G-H-I-J-K-L</p>
+<p><br></p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
         </td>
         <td><p><b>What it controls</b></p>
         </td>
@@ -330,22 +364,22 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p><br></p>
-        <p><b>IVF (Inverted File Index) : </b>a highly popular approximate nearest neighbor (ANN) indexing mechanism used in vector databases to accelerate similarity searches across high-dimensional datasets. Instead of comparing a query vector to every single vector in the database (brute-force search), IVF partitions the vector space to drastically restrict the search scope, trading off a fraction of accuracy for massive gains in query speed</p>
-        <p><b>It has </b>two main stages: training/indexing and querying.</p>
-        <ul><li><b>Indexing Phase (Clustering) : </b></li>
+<p><br></p>
+<p><br></p>
+<p><b>IVF (Inverted File Index) : </b>a highly popular approximate nearest neighbor (ANN) indexing mechanism used in vector databases to accelerate similarity searches across high-dimensional datasets. Instead of comparing a query vector to every single vector in the database (brute-force search), IVF partitions the vector space to drastically restrict the search scope, trading off a fraction of accuracy for massive gains in query speed</p>
+<p><b>It has </b>two main stages: training/indexing and querying.</p>
+<ul><li><b>Indexing Phase (Clustering) : </b></li>
         </ul>
-        <ul class="dash"><li><b>Space Partitioning: </b>The database uses an algorithm—<b>typically k-means</b>—to group the raw vectors into a specified number of geometric clusters (k, often configured as nlist). Each cluster is represented by a central point called a centroid. </li>
+<ul class="dash"><li><b>Space Partitioning: </b>The database uses an algorithm—<b>typically k-means</b>—to group the raw vectors into a specified number of geometric clusters (k, often configured as nlist). Each cluster is represented by a central point called a centroid. </li>
         <li><b>I</b><b>nverted Mapping: </b>The "inverted" concept borrows from classic text search, where a keyword maps to a list of matching document IDs. In vector IVF, the centroid identifier maps to a list of vectors (or their IDs) assigned to that specific cluster.</li>
         </ul>
-        <p><br></p>
-        <ul class="dash"><li><b>The Query Phase (Pruning) :</b></li>
+<p><br></p>
+<ul class="dash"><li><b>The Query Phase (Pruning) :</b></li>
         <li><b>Step A (Centroid Search):</b> When a new query vector arrives, the system calculates its distance against only the k cluster centroids to determine which clusters are geographically closest.</li>
         <li><b>Step B (Partition Probing): </b>Instead of scanning the entire database, the system isolates a user-defined number of the closest clusters (configured as nprobe) and performs a definitive search only within those subsets.</li>
         </ul>
-        <p><br></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
+<p><br></p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
         </td>
         <td><p><b>What it governs</b></p>
         </td>
@@ -368,9 +402,9 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p><b>Why Qdrant Vector DB : </b>Heavy metadata filtering, self-hosting, cost-sensitive</p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Qdrant</b></p>
+<p><br></p>
+<p><b>Why Qdrant Vector DB : </b>Heavy metadata filtering, self-hosting, cost-sensitive</p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Qdrant</b></p>
         </td>
         <td><p>Open source (Rust) + managed</p>
         </td>
@@ -383,102 +417,104 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p>Decision factors to say aloud: <b>scale (N × d), QPS and latency SLA, filter selectivity and tenancy model, hybrid-search need, existing stack and team skills, cloud and compliance alignment (residency, private networking), cost model (RAM-bound vs usage-based), and lock-in and migration path.</b></p>
-        <p><br></p>
-        <p>A tombstone in a vector database is a lightweight soft-delete marker that indicates a vector record has been deleted, without immediately removing its data or breaking the index.</p>
-        <p><br></p>
-        <p>The main index families: </p>
-        <ul><li>HNSW is a layered proximity graph with greedy descent and beam search at the bottom layer. Recall is tuned with M, ef_construction, and ef_search at query time. It's the low-latency default but memory-hungry and weak with deletes. </li>
+<p><br></p>
+<p>Decision factors to say aloud: <b>scale (N × d), QPS and latency SLA, filter selectivity and tenancy model, hybrid-search need, existing stack and team skills, cloud and compliance alignment (residency, private networking), cost model (RAM-bound vs usage-based), and lock-in and migration path.</b></p>
+<p><br></p>
+<p>A tombstone in a vector database is a lightweight soft-delete marker that indicates a vector record has been deleted, without immediately removing its data or breaking the index.</p>
+<p><br></p>
+<p>The main index families: </p>
+<ul><li>HNSW is a layered proximity graph with greedy descent and beam search at the bottom layer. Recall is tuned with M, ef_construction, and ef_search at query time. It's the low-latency default but memory-hungry and weak with deletes. </li>
         <li>IVF clusters vectors with k-means and scans only the nprobe nearest clusters, which is cheaper in memory and pairs well with product quantization. </li>
         <li>PQ splits vectors into sub-vectors and stores one-byte centroid codes, roughly 64× compression, using table-lookup distances. </li>
         <li>IVF-PQ with a full-precision refine step is the classic billion-scale recipe. </li>
         <li>In practice I often start with HNSW plus int8 quantization.</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>6 — RETRIEVAL</b></p>
-        <p><br></p>
-        <p><b>1. Dense Retrieval: This is bi-encoder retrival </b>where queries and documents (actuall chunk vectors) are encoded independently into dense vector representations</p>
-        <p><br></p>
-        <p><b>Where dense retrieval fails:</b></p>
-        <ul><li>exact identifiers ("BK-55120," "ERR_4012")</li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="6-retrieval">
+        <h2><b>6 — RETRIEVAL</b></h2>
+<p><br></p>
+<p><b>1. Dense Retrieval: This is bi-encoder retrival </b>where queries and documents (actuall chunk vectors) are encoded independently into dense vector representations</p>
+<p><br></p>
+<p><b>Where dense retrieval fails:</b></p>
+<ul><li>exact identifiers ("BK-55120," "ERR_4012")</li>
         <li>rare named entities</li>
         <li>numbers and dates</li>
         <li>negation</li>
         <li>very short or very long queries</li>
         <li>out-of-domain jargon</li>
         </ul>
-        <p><br></p>
-        <p><b>2. Sparse Retrieval ; Inverted Index</b></p>
-        <p><br></p>
-        <p><b>The analyzer pipeline</b> runs identically on documents and queries: tokenize → lowercase → remove stopwords (optional) → stem or lemmatize → language-specific normalization. For Arabic, that means alef/yaa/taa-marbuta normalization and light stemming.</p>
-        <p><br></p>
-        <p><b>Types</b> :</p>
-        <p><br></p>
-        <p><b>TF-IDF : </b>A term matters if it is frequent <i>in this document</i> (TF) and rare <i>across the corpus</i> (IDF).</p>
-        <ul><li><b>Term Frequency (TF):</b> How often a query word appears in a document. If a word appears multiple times, the document is generally more relevant.</li>
+<p><br></p>
+<p><b>2. Sparse Retrieval ; Inverted Index</b></p>
+<p><br></p>
+<p><b>The analyzer pipeline</b> runs identically on documents and queries: tokenize → lowercase → remove stopwords (optional) → stem or lemmatize → language-specific normalization. For Arabic, that means alef/yaa/taa-marbuta normalization and light stemming.</p>
+<p><br></p>
+<p><b>Types</b> :</p>
+<p><br></p>
+<p><b>TF-IDF : </b>A term matters if it is frequent <i>in this document</i> (TF) and rare <i>across the corpus</i> (IDF).</p>
+<ul><li><b>Term Frequency (TF):</b> How often a query word appears in a document. If a word appears multiple times, the document is generally more relevant.</li>
         <li><b>Inverse Document Frequency (IDF):</b> How common a query word is across all documents. Rare words (like "BM25") carry significantly more weight than common words (like "the" or "system").</li>
         <li><b>Document Length Normalization: </b>How long the document is compared to the average document length in the database. A short document containing your keyword twice is usually more relevant than a 500-page book containing your keyword twice.</li>
         </ul>
-        <p><b>BM25: </b>a highly efficient <b>TF-IDF </b></p>
-        <p><br></p>
-        <p><b>3. Hybrid Retrieval :  Dense</b> + <b>Sparse</b></p>
-        <p><br></p>
-        <p><b>Dense = semantic understanding</b></p>
-        <p><b>Sparse = exact lexical matching</b></p>
-        <p><b>Fusion Methods : </b></p>
-        <p><b>Fusion = combining results from multiple retrieval methods into one final ranked list.</b></p>
-        <p><b>1. Score normalization + weighted sum  - </b>Retrieve candidates using multiple methods → normalize their scores to a common scale → assign importance (weights) to each retriever → combine the scores → rank the documents again. This is commonly used in Hybrid RAG .</p>
-        <p><b>normalization type : </b></p>
-        <ul><li>min-max: (s − min) / (max − min) (per query, per retriever)  </li>
+<p><b>BM25: </b>a highly efficient <b>TF-IDF </b></p>
+<p><br></p>
+<p><b>3. Hybrid Retrieval :  Dense</b> + <b>Sparse</b></p>
+<p><br></p>
+<p><b>Dense = semantic understanding</b></p>
+<p><b>Sparse = exact lexical matching</b></p>
+<p><b>Fusion Methods : </b></p>
+<p><b>Fusion = combining results from multiple retrieval methods into one final ranked list.</b></p>
+<p><b>1. Score normalization + weighted sum  - </b>Retrieve candidates using multiple methods → normalize their scores to a common scale → assign importance (weights) to each retriever → combine the scores → rank the documents again. This is commonly used in Hybrid RAG .</p>
+<p><b>normalization type : </b></p>
+<ul><li>min-max: (s − min) / (max − min) (per query, per retriever)  </li>
         <li>z-score: s' = (s − μ) / σ</li>
         <li>Softmax</li>
         </ul>
-        <p><b>weighting : </b>The weights determine how much influence each retrieval strategy has. </p>
-        <p><br></p>
-        <p>Ex : </p>
-        <ul class="dash"><li>BM25 = 0.5 - Vector = 0.5 : Both are equally important.</li>
+<p><b>weighting : </b>The weights determine how much influence each retrieval strategy has. </p>
+<p><br></p>
+<p>Ex : </p>
+<ul class="dash"><li>BM25 = 0.5 - Vector = 0.5 : Both are equally important.</li>
         <li>BM25 = 0.3 - Vector = 0.7 : Semantic search is more important.</li>
         </ul>
-        <p><br></p>
-        <p class="gn-doc-h"><b>Scenario :</b></p>
-        <p>If an interviewer asks:</p>
-        <p><b>"Explain score normalization and weighted sum fusion in RAG."</b></p>
-        <p>A strong answer would be:</p>
-        <p><b>"Score normalization plus weighted sum is a hybrid retrieval fusion technique used to combine results from multiple retrievers such as BM25 and dense vector search. Since different retrievers produce scores on different scales, we first normalize their scores to a common range, such as 0 to 1. We then assign weights based on the relative importance of each retrieval strategy and calculate a combined score. For example, if BM25 has a normalized score of 0.8 and vector search has 0.9, with weights of 0.4 and 0.6, the final score is 0.4 × 0.8 + 0.6 × 0.9 = 0.86. We repeat this for all candidates, sort by the fused score, and pass the top candidates to an optional reranker and then the LLM. The key advantage is that keyword and semantic retrieval can complement each other, while the main challenge is choosing an appropriate normalization method and tuning the weights."</b></p>
-        <p><br></p>
-        <p>Problem: score distributions vary <i>per query</i>. One outlier BM25 score compresses all other normalized scores toward zero. α also needs tuning, and the best α may vary by query type.</p>
-        <p><br></p>
-        <p><b>2. Reciprocal Rank Fusion (RRF) </b>: RRF does not care about the actual retrieval scores. It cares about the rank/position of a document in each retriever's result list.</p>
-        <p><br></p>
-        <p><b>Forget the scores. Use the rankings. </b>Documents that consistently rank highly across multiple retrieval systems get rewarded.</p>
-        <p>Formula : 1/(k+rank).</p>
-        <p class="gn-doc-h"><b>Scenario :</b></p>
-        <p><b>Interviewer:</b></p>
-        <p>"You have BM25 and vector search. BM25 returns scores between 0 and 100, while vector search returns cosine similarity between 0 and 1. How would you combine them?"</p>
-        <p><b>Strong answer:</b></p>
-        <p>"I would consider Reciprocal Rank Fusion if I don't want to depend on score calibration. I would retrieve the top-K documents from both BM25 and vector search, assign each document a rank within each result set, and calculate an RRF score using 1/(k+rank).</p>
-        <p>.Documents that rank highly across both retrievers receive a higher fused score. This avoids the problem of comparing incompatible score scales. If I have reliable score normalization and need explicit control over the relative importance of each retriever, I could instead use normalized scores with a weighted sum. I would evaluate both approaches using metrics such as Recall@K, MRR, and NDCG."</p>
-        <p><br></p>
-        <p><b>4. Top-K and Retrieval Metrics : </b></p>
-        <p><br></p>
-        <p><b>Top-K</b> → How many retrieved documents/chunks do we keep  : <b>Retrieval Metrics</b> → How do we measure whether those retrieved documents are actually good .</p>
-        <p><br></p>
-        <p><b>Choosing K is a retrieval-quality vs context-noise trade-off.</b></p>
-        <p><b>Metrics : </b></p>
-        <p><br></p>
-        <ul><li><b>Recall@K</b> -  measures what proportion of <i>all</i> the possible relevant items in the entire database were successfully captured within the top <b>K</b> results</li>
+<p><br></p>
+<p class="gn-doc-h"><b>Scenario :</b></p>
+<p>If an interviewer asks:</p>
+<p><b>"Explain score normalization and weighted sum fusion in RAG."</b></p>
+<p>A strong answer would be:</p>
+<p><b>"Score normalization plus weighted sum is a hybrid retrieval fusion technique used to combine results from multiple retrievers such as BM25 and dense vector search. Since different retrievers produce scores on different scales, we first normalize their scores to a common range, such as 0 to 1. We then assign weights based on the relative importance of each retrieval strategy and calculate a combined score. For example, if BM25 has a normalized score of 0.8 and vector search has 0.9, with weights of 0.4 and 0.6, the final score is 0.4 × 0.8 + 0.6 × 0.9 = 0.86. We repeat this for all candidates, sort by the fused score, and pass the top candidates to an optional reranker and then the LLM. The key advantage is that keyword and semantic retrieval can complement each other, while the main challenge is choosing an appropriate normalization method and tuning the weights."</b></p>
+<p><br></p>
+<p>Problem: score distributions vary <i>per query</i>. One outlier BM25 score compresses all other normalized scores toward zero. α also needs tuning, and the best α may vary by query type.</p>
+<p><br></p>
+<p><b>2. Reciprocal Rank Fusion (RRF) </b>: RRF does not care about the actual retrieval scores. It cares about the rank/position of a document in each retriever's result list.</p>
+<p><br></p>
+<p><b>Forget the scores. Use the rankings. </b>Documents that consistently rank highly across multiple retrieval systems get rewarded.</p>
+<p>Formula : 1/(k+rank).</p>
+<p class="gn-doc-h"><b>Scenario :</b></p>
+<p><b>Interviewer:</b></p>
+<p>"You have BM25 and vector search. BM25 returns scores between 0 and 100, while vector search returns cosine similarity between 0 and 1. How would you combine them?"</p>
+<p><b>Strong answer:</b></p>
+<p>"I would consider Reciprocal Rank Fusion if I don't want to depend on score calibration. I would retrieve the top-K documents from both BM25 and vector search, assign each document a rank within each result set, and calculate an RRF score using 1/(k+rank).</p>
+<p>.Documents that rank highly across both retrievers receive a higher fused score. This avoids the problem of comparing incompatible score scales. If I have reliable score normalization and need explicit control over the relative importance of each retriever, I could instead use normalized scores with a weighted sum. I would evaluate both approaches using metrics such as Recall@K, MRR, and NDCG."</p>
+<p><br></p>
+<p><b>4. Top-K and Retrieval Metrics : </b></p>
+<p><br></p>
+<p><b>Top-K</b> → How many retrieved documents/chunks do we keep  : <b>Retrieval Metrics</b> → How do we measure whether those retrieved documents are actually good .</p>
+<p><br></p>
+<p><b>Choosing K is a retrieval-quality vs context-noise trade-off.</b></p>
+<p><b>Metrics : </b></p>
+<p><br></p>
+<ul><li><b>Recall@K</b> -  measures what proportion of <i>all</i> the possible relevant items in the entire database were successfully captured within the top <b>K</b> results</li>
         </ul>
-        <p><br></p>
-        <p>	<b>Example</b><b>:</b> Suppose there are 20 total relevant documents for a query in your database. If your top 10 results (K = 10) contain 5 of them, your Recall@10 is 5/20 = (0.25) (or 25%). High recall means the system isn't missing important information</p>
-        <p><br></p>
-        <ul><li><b>Precision@K</b> : measures what percentage of the items in your top <b>K</b> results are actually relevant.</li>
+<p><br></p>
+<p>	<b>Example</b><b>:</b> Suppose there are 20 total relevant documents for a query in your database. If your top 10 results (K = 10) contain 5 of them, your Recall@10 is 5/20 = (0.25) (or 25%). High recall means the system isn't missing important information</p>
+<p><br></p>
+<ul><li><b>Precision@K</b> : measures what percentage of the items in your top <b>K</b> results are actually relevant.</li>
         </ul>
-        <p><br></p>
-        <p>        <b>Example</b>  : If you ask a search engine for 10 results (K = 10) and 4 of them are useful, your Precision@10 is 4/10 = 0.40 (or 40%). High precision means fewer false alarms or junk results</p>
-        <p><br></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Feature</b></p>
+<p><br></p>
+<p>        <b>Example</b>  : If you ask a search engine for 10 results (K = 10) and 4 of them are useful, your Precision@10 is 4/10 = 0.40 (or 40%). High precision means fewer false alarms or junk results</p>
+<p><br></p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Feature</b></p>
         </td>
         <td><p><b>Precision@K</b></p>
         </td>
@@ -494,35 +530,35 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p><br></p>
-        <ul><li><b>Hit Rate@K :  </b>It answers a binary question: <i>"Did the system find anything relevant at all within the top K results?"</i></li>
+<p><br></p>
+<p><br></p>
+<ul><li><b>Hit Rate@K :  </b>It answers a binary question: <i>"Did the system find anything relevant at all within the top K results?"</i></li>
         </ul>
-        <p>	For each query or user, the score is <b>1</b> (if at least one relevant result is in the top K) or <b>0</b> (if none are).</p>
-        <p>	The final Hit Rate@K across a test set is the average of these 0s and 1s, represented as a value between <b>0.0 and 1.0</b>.</p>
-        <p><br></p>
-        <p>Recall@K vs Hit Rate@K : <b>Hit Rate only cares whether you found at least one relevant result &amp; Recall cares how many relevant results you found.</b></p>
-        <ul class="dash"><li><b>MRR - Mean Reciprocal Rank : </b>For a single query, you look at the position (rank) of the very first relevant result. You take the inverse (reciprocal) of that number: How high is the first good result? It cares <i>only</i> about how early the very first correct answer shows up.<ul class="dash"><li>If the first relevant result is at Position 1, the score is 1 / 1 = 1.0.</li>
+<p>	For each query or user, the score is <b>1</b> (if at least one relevant result is in the top K) or <b>0</b> (if none are).</p>
+<p>	The final Hit Rate@K across a test set is the average of these 0s and 1s, represented as a value between <b>0.0 and 1.0</b>.</p>
+<p><br></p>
+<p>Recall@K vs Hit Rate@K : <b>Hit Rate only cares whether you found at least one relevant result &amp; Recall cares how many relevant results you found.</b></p>
+<ul class="dash"><li><b>MRR - Mean Reciprocal Rank : </b>For a single query, you look at the position (rank) of the very first relevant result. You take the inverse (reciprocal) of that number: How high is the first good result? It cares <i>only</i> about how early the very first correct answer shows up.<ul class="dash"><li>If the first relevant result is at Position 1, the score is 1 / 1 = 1.0.</li>
         <li>If it is at Position 2, the score is 1 / 2 = 0.5.</li>
         <li>If it is at Position 4, the score is 1 / 4 = 0.25.</li>
         <li>If no relevant result is retrieved, the score is 0.</li>
         </ul>
         </li>
         </ul>
-        <ul><li><b>NDCG@K</b><b> (Normalized Discounted Cumulative Gain at rank K - </b>Actual DCG divided by Ideal DCG (NDCG = DC / IDCG) <ul class="dash"><li>This is one of the most powerful retrieval metrics because it considers:</li>
+<ul><li><b>NDCG@K</b><b> (Normalized Discounted Cumulative Gain at rank K - </b>Actual DCG divided by Ideal DCG (NDCG = DC / IDCG) <ul class="dash"><li>This is one of the most powerful retrieval metrics because it considers:</li>
         <li><b>Whether documents are relevant</b></li>
         <li><b>How relevant they are</b></li>
         <li><b>Where they appear in the ranking</b></li>
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <p>A highly relevant document at rank 1 contributes more than the same document at rank 10.</p>
-        <p><br></p>
-        <ul><li>When should I use which metric?</li>
+<p><br></p>
+<p>A highly relevant document at rank 1 contributes more than the same document at rank 10.</p>
+<p><br></p>
+<ul><li>When should I use which metric?</li>
         </ul>
-        <p><br></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Metric</b></p>
+<p><br></p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Metric</b></p>
         </td>
         <td><p><b>Main Question</b></p>
         </td>
@@ -554,117 +590,123 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p><br></p>
-        <p>Interview Answers : </p>
-        <p><br></p>
-        <p>Retrieval has two complementary families. </p>
-        <ul><li>Dense retrieval uses a bi-encoder: queries and chunks are embedded independently and matched by ANN search. It handles paraphrase and cross-lingual matching, but struggles with exact IDs, rare entities, numbers, and negation. </li>
+<p><br></p>
+<p><br></p>
+<p>Interview Answers : </p>
+<p><br></p>
+<p>Retrieval has two complementary families. </p>
+<ul><li>Dense retrieval uses a bi-encoder: queries and chunks are embedded independently and matched by ANN search. It handles paraphrase and cross-lingual matching, but struggles with exact IDs, rare entities, numbers, and negation. </li>
         <li>Sparse retrieval, typically BM25 over an inverted index, scores exact term overlap with IDF weighting so rare terms matter more, TF saturation so repetition has diminishing returns, and length normalization. It's excellent for codes and names but blind to synonyms.</li>
         </ul>
-        <p>Because they make different errors, I run both in parallel and fuse them. </p>
-        <p>My default is Reciprocal Rank Fusion, one over 60 plus rank summed across retrievers, because it's rank-based, needs no score calibration, and rewards documents both retrievers agree on. </p>
-        <p>Weighted normalized scores can do better when tuned on good eval data, but they're fragile to per-query score distributions. In practice, the reranker over the union of candidates often acts as the real fusion step.</p>
-        <p>I distinguish two Ks. K_retrieve, around 50, is optimized for recall and feeds the reranker; its cost is reranker compute. K_final, typically 3 to 10, goes into the prompt; its cost is LLM tokens, latency, and noise. I make K_final adaptive using reranker score thresholds and the token budget.</p>
-        <p>I measure Recall@K for the candidate stage, since that's the ceiling, NDCG and MRR for ranking quality, and Precision@K_final for context noise. Recall saturates as K grows while cost grows linearly, so I choose K from the knee of the recall curve on a golden set."</p>
-        <p><br></p>
-        <p><br></p>
-        <p><b>7 — QUERY TRANSFORMATION</b></p>
-        <p><br></p>
-        <p>IN RAG  - the process of using a Large Language Model (LLM) to modify, rephrase, or break down a user's raw input question before it is sent to a vector database or search engine</p>
-        <ul><li><b>Query Rewriting </b>- turns a query into a clear, standalone, retrieval-friendly form. This includes <b>conversational condensation</b> (resolving "it," "that one," "what about Abu Dhabi?"), spelling correction, and removing noise.</li>
+<p>Because they make different errors, I run both in parallel and fuse them. </p>
+<p>My default is Reciprocal Rank Fusion, one over 60 plus rank summed across retrievers, because it's rank-based, needs no score calibration, and rewards documents both retrievers agree on. </p>
+<p>Weighted normalized scores can do better when tuned on good eval data, but they're fragile to per-query score distributions. In practice, the reranker over the union of candidates often acts as the real fusion step.</p>
+<p>I distinguish two Ks. K_retrieve, around 50, is optimized for recall and feeds the reranker; its cost is reranker compute. K_final, typically 3 to 10, goes into the prompt; its cost is LLM tokens, latency, and noise. I make K_final adaptive using reranker score thresholds and the token budget.</p>
+<p>I measure Recall@K for the candidate stage, since that's the ceiling, NDCG and MRR for ranking quality, and Precision@K_final for context noise. Recall saturates as K grows while cost grows linearly, so I choose K from the knee of the recall curve on a golden set."</p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="7-query-transformation">
+        <h2><b>7 — QUERY TRANSFORMATION</b></h2>
+<p><br></p>
+<p>IN RAG  - the process of using a Large Language Model (LLM) to modify, rephrase, or break down a user's raw input question before it is sent to a vector database or search engine</p>
+<ul><li><b>Query Rewriting </b>- turns a query into a clear, standalone, retrieval-friendly form. This includes <b>conversational condensation</b> (resolving "it," "that one," "what about Abu Dhabi?"), spelling correction, and removing noise.</li>
         <li><b>Query Expansion - </b>adds synonyms, acronyms, and related terms, mostly to help BM25.</li>
         <li><b>Query Decomposition - </b>splits a complex question into independent sub-queries.</li>
         <li><b>HyDE - </b>the LLM writes a <i>hypothetical answer passage</i>, and you embed and search with <b>that</b> instead of the question. The intuition is that answer-to-answer similarity is higher than question-to-answer similarity.</li>
         </ul>
-        <p><br></p>
-        <p><b>Metadata Filtering</b></p>
-        <p><b>What it does:</b> restricts search to relevant subsets (region, product, version, date, doc type). Filters can come from three sources:</p>
-        <ol><li><b>UI facets</b>, which are the most reliable.</li>
+<p><br></p>
+<p><b>Metadata Filtering</b></p>
+<p><b>What it does:</b> restricts search to relevant subsets (region, product, version, date, doc type). Filters can come from three sources:</p>
+<ol><li><b>UI facets</b>, which are the most reliable.</li>
         <li><b>The user profile</b> (their region, their product tier).</li>
         <li><b>Extraction from the query.</b></li>
         </ol>
-        <p><b>Hard vs soft filters.</b> A hard filter excludes non-matching documents. A soft filter <i>boosts</i> matching documents instead. Use hard filters for security and definite constraints ("version 4"), and soft boosts for uncertain extractions.</p>
-        <p><br></p>
-        <ul><li><b>Interview :</b></li>
+<p><b>Hard vs soft filters.</b> A hard filter excludes non-matching documents. A soft filter <i>boosts</i> matching documents instead. Use hard filters for security and definite constraints ("version 4"), and soft boosts for uncertain extractions.</p>
+<p><br></p>
+<ul><li><b>Interview :</b></li>
         <li>Routing decides the backend. I cascade a cheap semantic router or classifier, escalating to an LLM only when confidence is low. Self-query converts language into schema-validated filters. The key safety rule is that LLM-generated filters can only narrow content, never touch security filters, with a fallback that relaxes content filters on zero results.</li>
         </ul>
-        <p><br></p>
-        <ul><li>For latency, I combine rewriting, routing, decomposition, expansion, and filter extraction into one structured-output call with a small model, so the whole plan costs about 300 milliseconds.</li>
+<p><br></p>
+<ul><li>For latency, I combine rewriting, routing, decomposition, expansion, and filter extraction into one structured-output call with a small model, so the whole plan costs about 300 milliseconds.</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>9 — RE-RANKING</b></p>
-        <p><br></p>
-        <p>It is a second-pass evaluation step that re-orders an initial, broad set of retrieved documents so the most contextually relevant information sits at the very top before being fed to the Large Language Model</p>
-        <p><br></p>
-        <p><b>Retriever </b><b>→</b><b> find a reasonably large set of potentially relevant documents.</b></p>
-        <p><b>Reranker </b><b>→</b><b> carefully determine which of those candidates are actually most relevant to the query.</b></p>
-        <p><br></p>
-        <p><br></p>
-        <p>Cross-Encoder : The important thing is that <b>the query and document can directly interact through Transformer self-attention at the token level</b>.</p>
-        <p><br></p>
-        <p>Cross-Encoders generally provide better pairwise relevance modeling because query and document tokens interact through the Transformer's attention layers, allowing the model to capture fine-grained semantic relationships, terms, negations, and contextual dependencies. The trade-off is significantly higher inference cost because each query-document pair must be evaluated independently."</p>
-        <p><br></p>
-        <p><br></p>
-        <p>Interview :</p>
-        <p><br></p>
-        <ul><li>Vector similarity alone isn't enough because bi-encoders compress the query and document independently into single vectors. There's no token-level interaction, so they capture topical similarity, not whether this passage answers this question, and they blur negation, numbers, and conditions. That's acceptable for the first stage, whose job is recall.</li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="9-re-ranking">
+        <h2><b>9 — RE-RANKING</b></h2>
+<p><br></p>
+<p>It is a second-pass evaluation step that re-orders an initial, broad set of retrieved documents so the most contextually relevant information sits at the very top before being fed to the Large Language Model</p>
+<p><br></p>
+<p><b>Retriever </b><b>→</b><b> find a reasonably large set of potentially relevant documents.</b></p>
+<p><b>Reranker </b><b>→</b><b> carefully determine which of those candidates are actually most relevant to the query.</b></p>
+<p><br></p>
+<p><br></p>
+<p>Cross-Encoder : The important thing is that <b>the query and document can directly interact through Transformer self-attention at the token level</b>.</p>
+<p><br></p>
+<p>Cross-Encoders generally provide better pairwise relevance modeling because query and document tokens interact through the Transformer's attention layers, allowing the model to capture fine-grained semantic relationships, terms, negations, and contextual dependencies. The trade-off is significantly higher inference cost because each query-document pair must be evaluated independently."</p>
+<p><br></p>
+<p><br></p>
+<p>Interview :</p>
+<p><br></p>
+<ul><li>Vector similarity alone isn't enough because bi-encoders compress the query and document independently into single vectors. There's no token-level interaction, so they capture topical similarity, not whether this passage answers this question, and they blur negation, numbers, and conditions. That's acceptable for the first stage, whose job is recall.</li>
         <li>So I use two-stage retrieval: hybrid retrieval fetches around 50 candidates, then a cross-encoder reads each query–passage pair jointly, with full attention between them, and outputs a relevance score. Cross-encoders can't precompute anything, so they're only affordable on a shortlist. </li>
         <li>LLM rerankers, especially listwise, give the best quality and can follow instructions like 'prefer the current official policy,' but at roughly 15K input tokens and one to three seconds per query, I reserve them for a cascade on complex or high-value queries.</li>
         <li>For options, managed APIs like Cohere Rerank give quality with zero ops but send data externally. Open-source rerankers like BGE's multilingual cross-encoder can be self-hosted on GPUs, which matters for data residency.</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p class="gn-doc-h"><b>RAG E2E Design - Interview Front</b></p>
-        <p><b>1: Requirements and Problem Definition :</b></p>
-        <p><br></p>
-        <p>When do we need RAG : <b>RAG is likely the backbone when</b> the knowledge is too large for every prompt, it is private or changes often, different users may see different subsets, and answers need provenance. If three or more of these hold, start from RAG.</p>
-        <p><br></p>
-        <ul><li>At first ask below questions :</li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="rag-e2e-design-interview-front">
+        <h2 class="gn-doc-h"><b>RAG E2E Design - Interview Front</b></h2>
+<p><b>1: Requirements and Problem Definition :</b></p>
+<p><br></p>
+<p>When do we need RAG : <b>RAG is likely the backbone when</b> the knowledge is too large for every prompt, it is private or changes often, different users may see different subsets, and answers need provenance. If three or more of these hold, start from RAG.</p>
+<p><br></p>
+<ul><li>At first ask below questions :</li>
         </ul>
-        <ul class="dash"><ul class="dash"><li>Before an architect designs a building, ask who will use it, how many people, what it must withstand, the budget, and which codes apply.</li>
+<ul class="dash"><ul class="dash"><li>Before an architect designs a building, ask who will use it, how many people, what it must withstand, the budget, and which codes apply.</li>
         <li>What decision or action does the user take after reading the answer?</li>
         <li>What do they do today, how long does it take, and how often does it fail.</li>
         <li>How will you decide whether this was worth building</li>
         </ul>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <ul><li><b>Deciding Whether RAG Is Appropriate - Questions to ask stakeholders:</b></li>
+<p><br></p>
+<p><br></p>
+<ul><li><b>Deciding Whether RAG Is Appropriate - Questions to ask stakeholders:</b></li>
         </ul>
-        <ul><ul class="dash"><li>How large is the corpus in tokens, and how fast is it growing?</li>
+<ul><ul class="dash"><li>How large is the corpus in tokens, and how fast is it growing?</li>
         <li>How often does it change?</li>
         <li>Does every user see the same content?</li>
         <li>Must answers cite sources?</li>
         <li>Are questions about text, numbers, or relationships between entities?</li>
         </ul>
         </ul>
-        <p><br></p>
-        <ul><li><b>Identifying Personas, Query Types, Source Systems, and Expected Answers - Questions to ask stakeholders:</b><ul class="dash"><li>Who are the top three user groups, and how do their needs differ?</li>
+<p><br></p>
+<ul><li><b>Identifying Personas, Query Types, Source Systems, and Expected Answers - Questions to ask stakeholders:</b><ul class="dash"><li>Who are the top three user groups, and how do their needs differ?</li>
         <li>Can I see search logs or ticket history?</li>
         <li>Which system is authoritative when two sources disagree?</li>
         <li>Can your best expert show me what a perfect answer looks like?</li>
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <ul><li><b>Defining Functional and Non-Functional Requirements : </b>Functional requirements (FRs) define what the system does. Non-functional requirements (NFRs) define how well it does it.<ul class="dash"><li><b>Questions to ask stakeholders:</b></li>
+<p><br></p>
+<ul><li><b>Defining Functional and Non-Functional Requirements : </b>Functional requirements (FRs) define what the system does. Non-functional requirements (NFRs) define how well it does it.<ul class="dash"><li><b>Questions to ask stakeholders:</b></li>
         <li>If you had to rank quality, latency, and cost, what’s the order?</li>
         <li>What is “fast enough”? Is streaming acceptable?</li>
         <li>Is a stale answer worse than no answer?</li>
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <ul><li><b>Estimating Volume, Growth, Concurrency, QPS, Latency, and Tokens : </b>Back-of-envelope math done before choosing technology, so you know which constraint actually binds.</li>
+<p><br></p>
+<ul><li><b>Estimating Volume, Growth, Concurrency, QPS, Latency, and Tokens : </b>Back-of-envelope math done before choosing technology, so you know which constraint actually binds.</li>
         </ul>
-        <p><br></p>
-        <p>	While calculation the Budget we need to keep in mind of below items :</p>
-        <p>	CORPUS Size ,INDEX MEMORY , TRAFFIC , TOKENS (system prompt 800 + history 1,000 + evidence 4,500 + query 200 ≈ 6,500 tokens Output ≈ 400 tokens)</p>
-        <p>	<b>INDEX MEMORY </b> : Vectors: 6M × 1,024 dims × 4 bytes (float32) ≈ 24.6 GB</p>
-        <p><br></p>
-        <ul><li><b>Identifying PII, Confidential Information, Access Control, and Regulatory Constraints </b></li>
+<p><br></p>
+<p>	While calculation the Budget we need to keep in mind of below items :</p>
+<p>	CORPUS Size ,INDEX MEMORY , TRAFFIC , TOKENS (system prompt 800 + history 1,000 + evidence 4,500 + query 200 ≈ 6,500 tokens Output ≈ 400 tokens)</p>
+<p>	<b>INDEX MEMORY </b> : Vectors: 6M × 1,024 dims × 4 bytes (float32) ≈ 24.6 GB</p>
+<p><br></p>
+<ul><li><b>Identifying PII, Confidential Information, Access Control, and Regulatory Constraints </b></li>
         <li><b>Why it matters.</b> The worst RAG incident is not a wrong answer. It is a correct answer given to the wrong person.</li>
         <li><b>Questions to ask stakeholders:</b><ul class="dash"><li>What classification scheme exists (public, internal, confidential, restricted)?</li>
         <li>Must the index mirror source ACLs exactly? How are nested groups resolved?</li>
@@ -675,16 +717,16 @@
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <ul><li><b>Estimating Infrastructure Cost</b><ul class="dash"><li>Main LLM: $3.00 per 1M input tokens, $15.00 per 1M output tokens.</li>
+<p><br></p>
+<ul><li><b>Estimating Infrastructure Cost</b><ul class="dash"><li>Main LLM: $3.00 per 1M input tokens, $15.00 per 1M output tokens.</li>
         <li>Small LLM for query rewriting: $0.50 per 1M input tokens, $2.00 per 1M output tokens.</li>
         <li>Embeddings: $0.10 per 1M tokens.</li>
         <li>Self-hosted reranker: about $0.001 per query, amortized.</li>
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <ul><li><b>Defining Success Criteria and Acceptance Thresholds</b><ul class="dash"><li>Security</li>
+<p><br></p>
+<ul><li><b>Defining Success Criteria and Acceptance Thresholds</b><ul class="dash"><li>Security</li>
         <li>Retrieval</li>
         <li>Generation</li>
         <li>Citations</li>
@@ -694,9 +736,9 @@
         </ul>
         </li>
         </ul>
-        <p><b>Interview Answer (about 2 minutes)</b></p>
-        <p>“Before choosing any technology, I’d spend the first few minutes on requirements, because in RAG they decide most of the architecture.</p>
-        <ul><li><b>Outcome</b> - First, the outcome: what does the user do with the answer, and what does a wrong answer cost? That determines how strict grounding and abstention must be.</li>
+<p><b>Interview Answer (about 2 minutes)</b></p>
+<p>“Before choosing any technology, I’d spend the first few minutes on requirements, because in RAG they decide most of the architecture.</p>
+<ul><li><b>Outcome</b> - First, the outcome: what does the user do with the answer, and what does a wrong answer cost? That determines how strict grounding and abstention must be.</li>
         <li><b>Taxonomy</b> : Second, I’d ask for real questions from search logs or tickets and build a query taxonomy. It tells me whether this is even a RAG problem. Aggregations belong in SQL, actions belong in tools, and navigational lookups might just need better search. RAG earns its place on synthesis across documents. The taxonomy also tells me whether I need lexical retrieval for IDs and error codes, which dense embeddings handle unreliably.</li>
         <li><b>Data : </b>Third, the data: which systems are authoritative, how they change, their formats (scanned PDFs and tables change parsing completely), and their permission models. The index becomes a second copy of the security model, so it must carry ACLs and stay in sync.</li>
         <li><b>Cost</b> : Fourth, measurable NFRs: p95 time to first token, availability with a defined degraded mode, residency, a cost-per-query envelope, and two separate freshness SLOs. Content freshness is a quality issue; permission revocation is a security issue.</li>
@@ -704,145 +746,153 @@
         <li><b>Evaluations</b> : Finally, I’d agree acceptance gates up front: zero cross-permission leaks as a hard gate, recall and faithfulness thresholds per query category on a golden set, and a business KPI measured against a control group.</li>
         <li>Only then would I sketch the architecture, and I’d tie every component back to one of these requirements.”</li>
         </ul>
-        <p><b>The business can’t give you labeled data. Now what?”</b></p>
-        <p>I hold short SME sessions where experts write gold answers for about 50 real questions. I add LLM-generated questions from the documents, reviewed by a human. Synthetic questions tend to share words with their source passages, which flatters lexical retrieval, so I weight real questions more. Then the set grows from production feedback, especially thumbs-down answers and escalations.</p>
-        <p><br></p>
-        <p><br></p>
-        <p><b>2. Architecture Diagrams and Component Deep Dive</b></p>
-        <p><br></p>
-        <p>══════════════════════════════ CONTROL PLANE ══════════════════════════════</p>
-        <p> source registry · sync schedules · versions (parser, chunker, embedding,index, prompt, model) · feature flags · routing rules</p>
-        <p>═══════════════════════════════════════════════════════════════════════════</p>
-        <p>          │ configures                             								     │ configures</p>
-        <p>          ▼                                             								    ▼</p>
-        <p> OFFLINE INDEXING PLANE                        					ONLINE QUERY PLANE</p>
-        <p> Sources → Connectors → Queue → Parse/OCR      				User → Gateway/AuthN → AuthZ</p>
-        <p>   → Clean → Metadata + ACL + PII → Chunk        				→ Input guardrails</p>
-        <p>   → Embed → Index writers                       						→ Query understanding</p>
-        <p>          │                                      							→ Retrieve → Fuse → Rerank</p>
-        <p>          │ writes                              							→ Context → Prompt → LLM</p>
-        <p>          │                                      							→ Validate → Output guardrails</p>
-        <p>          │                                  							            → Respond</p>
-        <p>          ▼                                             							▲ reads (ACL-filtered)</p>
-        <p> ─────────────────────────── SHARED INDEX LAYER ───────────────────────────</p>
-        <p>  			vector index · sparse index · metadata/ACL fields · chunk &amp; document store</p>
-        <p> ──────────────────────────────────────────────────────────────────────────</p>
-        <p>          │ ingestion events, metrics                 						  │ traces, feedback</p>
-        <p>          ▼                                             							 ▼</p>
-        <p>══════════════════ OBSERVABILITY &amp; EVALUATION PLANE ═══════════════════════</p>
-        <p> 			traces · metrics · cost · freshness · feedback · golden-set CI · online eval</p>
-        <p>═══════════════════════════════════════════════════════════════════════════</p>
-        <p><br></p>
-        <ul><ul><li><b>. </b><b>Interview Answer (about 2.5 minutes)</b></li>
+<p><b>The business can’t give you labeled data. Now what?”</b></p>
+<p>I hold short SME sessions where experts write gold answers for about 50 real questions. I add LLM-generated questions from the documents, reviewed by a human. Synthetic questions tend to share words with their source passages, which flatters lexical retrieval, so I weight real questions more. Then the set grows from production feedback, especially thumbs-down answers and escalations.</p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="2-architecture-diagrams-and-component-deep-dive">
+        <h2><b>2. Architecture Diagrams and Component Deep Dive</b></h2>
+<p><br></p>
+<p>══════════════════════════════ CONTROL PLANE ══════════════════════════════</p>
+<p> source registry · sync schedules · versions (parser, chunker, embedding,index, prompt, model) · feature flags · routing rules</p>
+<p>═══════════════════════════════════════════════════════════════════════════</p>
+<p>          │ configures                             								     │ configures</p>
+<p>          ▼                                             								    ▼</p>
+<p> OFFLINE INDEXING PLANE                        					ONLINE QUERY PLANE</p>
+<p> Sources → Connectors → Queue → Parse/OCR      				User → Gateway/AuthN → AuthZ</p>
+<p>   → Clean → Metadata + ACL + PII → Chunk        				→ Input guardrails</p>
+<p>   → Embed → Index writers                       						→ Query understanding</p>
+<p>          │                                      							→ Retrieve → Fuse → Rerank</p>
+<p>          │ writes                              							→ Context → Prompt → LLM</p>
+<p>          │                                      							→ Validate → Output guardrails</p>
+<p>          │                                  							            → Respond</p>
+<p>          ▼                                             							▲ reads (ACL-filtered)</p>
+<p> ─────────────────────────── SHARED INDEX LAYER ───────────────────────────</p>
+<p>  			vector index · sparse index · metadata/ACL fields · chunk &amp; document store</p>
+<p> ──────────────────────────────────────────────────────────────────────────</p>
+<p>          │ ingestion events, metrics                 						  │ traces, feedback</p>
+<p>          ▼                                             							 ▼</p>
+<p>══════════════════ OBSERVABILITY &amp; EVALUATION PLANE ═══════════════════════</p>
+<p> 			traces · metrics · cost · freshness · feedback · golden-set CI · online eval</p>
+<p>═══════════════════════════════════════════════════════════════════════════</p>
+<p><br></p>
+<ul><ul><li><b>. </b><b>Interview Answer (about 2.5 minutes)</b></li>
         </ul>
         </ul>
-        <p>I separate the system into four planes.</p>
-        <ul class="dash"><li><b>The offline indexing plane</b> uses connectors driven by events plus periodic reconciliation, feeding a queue with retries and a dead-letter queue. A document registry tracks the version, content hash, and ACL hash of every document, so permission-only changes update metadata without re-		embedding. Documents go through layout-aware parsing, with OCR only where scans matter, then cleaning and metadata extraction, including effective dates and status so superseded policies can be excluded. Then ACL mapping and PII handling, structure-aware chunking with parent links and 	page anchors, and embedding with the model version recorded on every vector. We write to a vector index, a BM25 index, and filterable metadata fields.</li>
+<p>I separate the system into four planes.</p>
+<ul class="dash"><li><b>The offline indexing plane</b> uses connectors driven by events plus periodic reconciliation, feeding a queue with retries and a dead-letter queue. A document registry tracks the version, content hash, and ACL hash of every document, so permission-only changes update metadata without re-		embedding. Documents go through layout-aware parsing, with OCR only where scans matter, then cleaning and metadata extraction, including effective dates and status so superseded policies can be excluded. Then ACL mapping and PII handling, structure-aware chunking with parent links and 	page anchors, and embedding with the model version recorded on every vector. We write to a vector index, a BM25 index, and filterable metadata fields.</li>
         <li><b>The online plane</b> authenticates the user and resolves their groups into a permission filter, and if that fails, it fails closed. It rewrites follow-up questions and routes: documents go to RAG, numbers go to SQL or APIs, IDs go to exact lookups. Then it runs dense and sparse retrieval in parallel, with 	the permission filter inside each search, fuses the results with RRF, reranks about 50 candidates with a cross-encoder, and builds a deduplicated, budgeted context with citation IDs. The principle is recall early, precision late.</li>
         <li><b>Generation</b> uses a versioned prompt that separates trusted instructions from untrusted evidence, calls the LLM through a gateway with fallbacks, and validates citations before delivery. High-risk routes add claim-level verification.</li>
         <li><b>Operations</b> wrap all of it: per-stage traces, a golden set that gates CI, sampled online evaluation, index versions switched via aliases, and a degradation ladder down to search-only mode.</li>
         <li>That is my baseline. Query expansion, compression, graph retrieval, and agentic loops come in only when evaluation shows a specific failure they fix.”</li>
         </ul>
-        <p>.  <b>Follow Up Questions :</b></p>
-        <p><br></p>
-        <p><b>Your pipeline has a dozen stages. Why not just embed, take the top 5, and generate?”</b></p>
-        <p>That is my prototype, and it fails exactly where enterprises get hurt:</p>
-        <ul><li>exact IDs (no sparse retrieval),</li>
+<p>.  <b>Follow Up Questions :</b></p>
+<p><br></p>
+<p><b>Your pipeline has a dozen stages. Why not just embed, take the top 5, and generate?”</b></p>
+<p>That is my prototype, and it fails exactly where enterprises get hurt:</p>
+<ul><li>exact IDs (no sparse retrieval),</li>
         <li>permissions (no ACL filter),</li>
         <li>stale versions (no metadata),</li>
         <li>ranking precision (no reranker),</li>
         <li>debuggability (no traces).</li>
         </ul>
-        <p>Most of the added stages are offline and add no query latency. The online additions (parallel sparse retrieval, fusion, reranking) cost a few hundred milliseconds against an LLM that takes seconds. Each one stays only if the golden set shows it earns its place.</p>
-        <p><b>Where exactly do you enforce permissions? Why not filter right after retrieval, before the LLM?”</b></p>
-        <p>Inside the search, as a filter on principals in both the dense and sparse queries. Filtering after retrieval but before generation doesn’t leak if it’s implemented correctly, but it has two problems:</p>
-        <ul><li><b>Recall collapses.</b> If 45 of the top 50 results are forbidden, the user gets 5 weak candidates.</li>
+<p>Most of the added stages are offline and add no query latency. The online additions (parallel sparse retrieval, fusion, reranking) cost a few hundred milliseconds against an LLM that takes seconds. Each one stays only if the golden set shows it earns its place.</p>
+<p><b>Where exactly do you enforce permissions? Why not filter right after retrieval, before the LLM?”</b></p>
+<p>Inside the search, as a filter on principals in both the dense and sparse queries. Filtering after retrieval but before generation doesn’t leak if it’s implemented correctly, but it has two problems:</p>
+<ul><li><b>Recall collapses.</b> If 45 of the top 50 results are forbidden, the user gets 5 weak candidates.</li>
         <li><b>It’s fragile.</b> Every code path, cache, and future feature must remember to apply the filter, and one omission is a leak.</li>
         </ul>
-        <p><br></p>
-        <p><b>The reranker adds about 250 ms. Justify it.</b></p>
-        <p>With evidence. I compare precision@5, NDCG, and end-to-end correctness on the golden set, with and without the reranker. In context, 250 ms is about 5% of a ~5-second request. A better ranking also lets me send fewer chunks, which cuts input tokens and partly pays for itself. If the evaluation shows no gain, I remove it. If it shows a gain but latency is tight, I reduce the candidate count, use a smaller reranker, or batch requests on GPU.</p>
-        <p><br></p>
-        <p><b>Answers are bad. Which component do you fix first?”</b></p>
-        <p>None, until I’ve localized the failure. I walk a failing sample through the trace, asking at each step:</p>
-        <ol><li>Is the answer in the corpus at all?</li>
+<p><br></p>
+<p><b>The reranker adds about 250 ms. Justify it.</b></p>
+<p>With evidence. I compare precision@5, NDCG, and end-to-end correctness on the golden set, with and without the reranker. In context, 250 ms is about 5% of a ~5-second request. A better ranking also lets me send fewer chunks, which cuts input tokens and partly pays for itself. If the evaluation shows no gain, I remove it. If it shows a gain but latency is tight, I reduce the candidate count, use a smaller reranker, or batch requests on GPU.</p>
+<p><br></p>
+<p><b>Answers are bad. Which component do you fix first?”</b></p>
+<p>None, until I’ve localized the failure. I walk a failing sample through the trace, asking at each step:</p>
+<ol><li>Is the answer in the corpus at all?</li>
         <li>Was it parsed correctly?</li>
         <li>Is it in the top 50 candidates?</li>
         <li>Is it in the reranked top 10?</li>
         <li>Did it make it into the final context?</li>
         <li>Was it used faithfully in the answer?</li>
         </ol>
-        <p><br></p>
-        <p><br></p>
-        <p>Same Vector :</p>
-        <p><br></p>
-        <p>{</p>
-        <p>  "chunk_id": "pol-travel-v5#s4.2#c03",</p>
-        <p>  "doc_id": "pol-travel",</p>
-        <p>  "doc_version": 5,</p>
-        <p>  "parent_id": "pol-travel-v5#s4.2",</p>
-        <p>  "text": "Employees at Director level and above may book business class ...",</p>
-        <p>  "context_prefix": "Travel Policy v5 &gt; 4. Air Travel &gt; 4.2 Class of Travel",</p>
-        <p>  "section_path": ["4. Air Travel", "4.2 Class of Travel"],</p>
-        <p>  "page_start": 7, "page_end": 7,</p>
-        <p>  "source_system": "sharepoint", "source_url": "https://...",</p>
-        <p>  "doc_type": "policy", "language": "en",</p>
-        <p>  "effective_from": "2026-03-01", "effective_to": null, "status": "active",</p>
-        <p>  "tenant_id": "corp", "acl_principals": ["grp:all-employees"],</p>
-        <p>  "classification": "internal", "pii_tags": [],</p>
-        <p>  "content_hash": "sha256:9a1f...", "acl_hash": "sha256:44c0...",</p>
-        <p>  "parser_version": "layout-2.3", "chunker_version": "struct-1.4",</p>
-        <p>  "embedding_model": "emb-x@2026-01",</p>
-        <p>  "ingested_at": "2026-03-01T08:03:11Z"</p>
-        <p>}</p>
-        <p><br></p>
-        <p>3 . <b>Document Identity and Versioning</b></p>
-        <p><br></p>
-        <ul><li>Metadata Extraction : Source-system native fields : 	ID, title, owner, created/modified dates, permissions, sensitivity label</li>
+<p><br></p>
+<p><br></p>
+<p>Same Vector :</p>
+<p><br></p>
+<p>{</p>
+<p>  "chunk_id": "pol-travel-v5#s4.2#c03",</p>
+<p>  "doc_id": "pol-travel",</p>
+<p>  "doc_version": 5,</p>
+<p>  "parent_id": "pol-travel-v5#s4.2",</p>
+<p>  "text": "Employees at Director level and above may book business class ...",</p>
+<p>  "context_prefix": "Travel Policy v5 &gt; 4. Air Travel &gt; 4.2 Class of Travel",</p>
+<p>  "section_path": ["4. Air Travel", "4.2 Class of Travel"],</p>
+<p>  "page_start": 7, "page_end": 7,</p>
+<p>  "source_system": "sharepoint", "source_url": "https://...",</p>
+<p>  "doc_type": "policy", "language": "en",</p>
+<p>  "effective_from": "2026-03-01", "effective_to": null, "status": "active",</p>
+<p>  "tenant_id": "corp", "acl_principals": ["grp:all-employees"],</p>
+<p>  "classification": "internal", "pii_tags": [],</p>
+<p>  "content_hash": "sha256:9a1f...", "acl_hash": "sha256:44c0...",</p>
+<p>  "parser_version": "layout-2.3", "chunker_version": "struct-1.4",</p>
+<p>  "embedding_model": "emb-x@2026-01",</p>
+<p>  "ingested_at": "2026-03-01T08:03:11Z"</p>
+<p>}</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="3-document-identity-and-versioning">
+        <h2>3 . <b>Document Identity and Versioning</b></h2>
+<p><br></p>
+<ul><li>Metadata Extraction : Source-system native fields : 	ID, title, owner, created/modified dates, permissions, sensitivity label</li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>4. Chunking Strategy and Document Representation :</b></p>
-        <p><br></p>
-        <ul><li>Chunking looks like a preprocessing detail. In practice it decides three things at once:</li>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="4-chunking-strategy-and-document-representation">
+        <h2><b>4. Chunking Strategy and Document Representation :</b></h2>
+<p><br></p>
+<ul><li>Chunking looks like a preprocessing detail. In practice it decides three things at once:</li>
         </ul>
-        <ul><ul class="dash"><li><b>What can be found:</b> the retrieval unit.</li>
+<ul><ul class="dash"><li><b>What can be found:</b> the retrieval unit.</li>
         <li><b>What the model reads:</b> the generation unit.</li>
         <li><b>What can be cited:</b> the citation unit.</li>
         </ul>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <ul><li><b>What a chunk is</b></li>
+<p><br></p>
+<p><br></p>
+<ul><li><b>What a chunk is</b></li>
         </ul>
-        <p>	A chunk is the unit that gets one embedding vector, one entry in the sparse index, a rank in retrieval, a slot in the context window, and a citation. Every downstream stage operates on chunks, so chunking errors spread through the whole pipeline.</p>
-        <ul><li><b>Why chunk boundaries matter more than chunk size</b></li>
+<p>	A chunk is the unit that gets one embedding vector, one entry in the sparse index, a rank in retrieval, a slot in the context window, and a citation. Every downstream stage operates on chunks, so chunking errors spread through the whole pipeline.</p>
+<ul><li><b>Why chunk boundaries matter more than chunk size</b></li>
         </ul>
-        <ul class="dash"><ul class="dash"><li>            Most chunking failures come from <i>where</i> the cut falls, not <i>how big</i> the chunk is. Common examples:</li>
+<ul class="dash"><ul class="dash"><li>            Most chunking failures come from <i>where</i> the cut falls, not <i>how big</i> the chunk is. Common examples:</li>
         <li>a rule separated from its exception,</li>
         <li>a table row separated from its header,</li>
         <li>a list separated from the sentence that introduces it (“Exceptions:”),</li>
         <li>a function cut in half.</li>
         </ul>
         </ul>
-        <p><br></p>
-        <ul><li><b>Overlap costs you in two places:</b></li>
+<p><br></p>
+<ul><li><b>Overlap costs you in two places:</b></li>
         </ul>
-        <ol><ul class="dash"><li><b>At storage time:</b> more vectors, more embedding cost, more index memory.</li>
+<ol><ul class="dash"><li><b>At storage time:</b> more vectors, more embedding cost, more index memory.</li>
         <li><b>At retrieval time:</b> adjacent overlapping chunks often get retrieved together. The same sentences then appear twice in the context and use up two of your top-K slots, which reduces the diversity of evidence.</li>
         </ul>
         </ol>
-        <p><br></p>
-        <ul><li><b>How Chunk Size Affects Embedding Quality :</b><ul class="dash"><li>Large chunks dilute meaning</li>
+<p><br></p>
+<ul><li><b>How Chunk Size Affects Embedding Quality :</b><ul class="dash"><li>Large chunks dilute meaning</li>
         <li>Tiny chunks lack meaning.</li>
         <li><b>Hard limits truncate.</b> Every embedding model has a maximum input length, and anything beyond it is dropped without warning.</li>
         </ul>
         </li>
         </ul>
-        <p><br></p>
-        <p><br></p>
-        <p><b>5 . Embedding Model Selection</b></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Term</b></p>
+<p><br></p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="5-embedding-model-selection">
+        <h2><b>5 . Embedding Model Selection</b></h2>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Term</b></p>
         </td>
         <td><p><b>Meaning</b></p>
         </td>
@@ -874,22 +924,24 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p>Interview : </p>
-        <p><br></p>
-        <p>I treat embedding selection as an evaluation problem, not a leaderboard lookup.</p>
-        <p>First, hard constraints filter candidates: data residency, license, required languages, and a max input length that covers my chunks. From the survivors, I shortlist three or four using public retrieval benchmarks in my languages. But I make the decision on my own golden set: real queries labeled at the span level, sliced by query type (policy questions, exact IDs, Arabic, jargon, OCR-noisy documents), searched against the full corpus with exact search, so I’m measuring the model and not ANN error. I report recall@50 and NDCG with confidence intervals, and I re-test the top two inside the real pipeline with BM25 and the reranker, because what matters is the marginal gain.</p>
-        <p><br></p>
-        <p><b>6: Vector Database and Index Selection : </b></p>
-        <p><br></p>
-        <ul><li><b>Exact vs. approximate</b></li>
+<p><br></p>
+<p>Interview : </p>
+<p><br></p>
+<p>I treat embedding selection as an evaluation problem, not a leaderboard lookup.</p>
+<p>First, hard constraints filter candidates: data residency, license, required languages, and a max input length that covers my chunks. From the survivors, I shortlist three or four using public retrieval benchmarks in my languages. But I make the decision on my own golden set: real queries labeled at the span level, sliced by query type (policy questions, exact IDs, Arabic, jargon, OCR-noisy documents), searched against the full corpus with exact search, so I’m measuring the model and not ANN error. I report recall@50 and NDCG with confidence intervals, and I re-test the top two inside the real pipeline with BM25 and the reranker, because what matters is the marginal gain.</p>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="6-vector-database-and-index-selection">
+        <h2><b>6: Vector Database and Index Selection : </b></h2>
+<p><br></p>
+<ul><li><b>Exact vs. approximate</b></li>
         </ul>
-        <ul class="dash"><ul class="dash"><li><b>Exact k-nearest-neighbor (kNN) search</b> compares the query with every vector. Cost grows linearly with N × d (number of vectors × dimension). Recall is perfect by definition.</li>
+<ul class="dash"><ul class="dash"><li><b>Exact k-nearest-neighbor (kNN) search</b> compares the query with every vector. Cost grows linearly with N × d (number of vectors × dimension). Recall is perfect by definition.</li>
         <li><b>ANN search</b> organizes vectors so only a small fraction is examined, trading a little recall for large speed gains.</li>
         </ul>
         </ul>
-        <p><br></p>
-        <ul><li><b>The index techniques :</b><ul class="dash"><li><b>Flat</b> : Exact results , Trivial updates &amp; Filtering is easy:</li>
+<p><br></p>
+<ul><li><b>The index techniques :</b><ul class="dash"><li><b>Flat</b> : Exact results , Trivial updates &amp; Filtering is easy:</li>
         <li><b>HNSW (Hierarchical Navigable Small World) : </b>A multi-layer proximity graph , Upper layers are sparse, with long-range links; the bottom layer contains every vector, with local links. <b>Very high recall at low latency, and good support for incremental inserts. </b>Deletes are usually marked and cleaned up later during compaction or rebuild</li>
         <li>IVF (inverted file index) : k-means clustering splits vectors into <code>nlist</code> clusters : A query probes the <code>nprobe</code> nearest clusters and scans only their members : Recall depends on <code>nprobe</code>.</li>
         <li>Product quantization (PQ) : Each vector is split into <code>m</code> sub-vectors : IVF-PQ is the classic recipe for billion-scale search.</li>
@@ -897,9 +949,9 @@
         </li>
         <li><b>Index and System Decisions : </b></li>
         </ul>
-        <p><b>	HNSW ; M (</b>how many contacts each person keeps per layer<b>) , efConstruction</b> (how many candidates a newcomer interviews before choosing their M contacts) &amp; <b>efSearch: </b>how many leads you keep on your shortlist while searching.</p>
-        <p><br></p>
-        <div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
+<p><b>	HNSW ; M (</b>how many contacts each person keeps per layer<b>) , efConstruction</b> (how many candidates a newcomer interviews before choosing their M contacts) &amp; <b>efSearch: </b>how many leads you keep on your shortlist while searching.</p>
+<p><br></p>
+<div class="gn-table-wrap"><table class="gn-table"><tbody><tr><td><p><b>Parameter</b></p>
         </td>
         <td><p><b>When set</b></p>
         </td>
@@ -945,23 +997,26 @@
         </tr>
         </tbody>
         </table></div>
-        <p><br></p>
-        <p><b>7: Retrieval Strategy</b></p>
-        <ul><li><b>High recall at the candidate stage.</b> Don’t miss the evidence.</li>
+<p><br></p>
+      </section>
+      <section class="gn-section gn-doc" id="7-retrieval-strategy">
+        <h2><b>7: Retrieval Strategy</b></h2>
+<ul><li><b>High recall at the candidate stage.</b> Don’t miss the evidence.</li>
         <li><b>High precision at the final stage.</b> Don’t flood the context window.</li>
         <li><b>Latency.</b></li>
         <li><b>Cost.</b></li>
         </ul>
-        <p><br></p>
-        <p><b>Hybrid Retrieval</b></p>
-        <ul><li><b>Problem it solves:</b> Real enterprise traffic mixes semantic questions with ID-bearing ones, and neither dense nor sparse retrieval covers both.</li>
+<p><br></p>
+<p><b>Hybrid Retrieval</b></p>
+<ul><li><b>Problem it solves:</b> Real enterprise traffic mixes semantic questions with ID-bearing ones, and neither dense nor sparse retrieval covers both.</li>
         <li><b>How it works:</b><ol><li>Run dense and sparse retrieval <i>in parallel</i>, each with filters applied inside the search.</li>
         <li>Fuse the ranked lists (Part 8).</li>
         <li>Pass the fused candidates to the reranker.</li>
         </ol>
         </li>
         </ul>
-      </div>
+      </section>
+
     </main>
     <footer class="gn-footer">
       <p>Part of <a href="../">GenAI Notes</a> · <a href="https://pages.github.com/">GitHub Pages</a></p>
